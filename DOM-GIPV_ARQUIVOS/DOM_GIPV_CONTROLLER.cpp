@@ -6,7 +6,8 @@ void jogar(){
 	menu();
 	//oi
 	//ola
-	
+	//lol
+
 }
 
 
