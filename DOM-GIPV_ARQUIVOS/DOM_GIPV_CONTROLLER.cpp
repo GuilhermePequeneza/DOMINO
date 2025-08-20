@@ -4,6 +4,7 @@
 void jogar(){
 	embaralharPecas();
 	menu();
+	//oi
 	
 	
 }
