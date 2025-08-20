@@ -2,12 +2,25 @@
 #include "DOM_GIPV_VIEW.cpp"
 
 void jogar(){
-	embaralharPecas();
-	menu();
-	//oi
-	//ola
-	//lol
+	char op;
+	do{
+		
+		op=menuGeral();
+		switch(op)
+		{
+			case '1':
+				prepararJogo();
+				IniciaJogo();
+				break;
+			case '0':
+				exit(0);
+				break;
+			default:
+				printf("Ta errado"); //---:> acho melhor botar no view
+		}
+	}while(0)
 
+	
 }
 
 
