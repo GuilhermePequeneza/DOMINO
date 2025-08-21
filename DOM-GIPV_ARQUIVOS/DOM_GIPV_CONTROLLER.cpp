@@ -15,8 +15,6 @@ void jogar(){
 			case '0':
 				exit(0);
 				break;
-			default:
-				printf("Ta errado"); //---:> acho melhor botar no view
 		}
 	}while(0)
 	
