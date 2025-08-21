@@ -28,7 +28,7 @@ void primeiraJogada(){
 	
 }
 
-void jogadaJogador(){
+void jogadaJogador(int jogador){
 	
 }
 
