@@ -1,10 +1,14 @@
 #include<stdio.h>
 
 
-void menu();
+char menuGeral();
 
 void exibirPecas();
 
-void pecasOrdenadas();
-
 void fclear();
+
+char menuJogador();
+
+void apresentarMesa();
+
+void apresentarPecasJogador(int jogador);
