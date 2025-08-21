@@ -19,6 +19,8 @@ void jogar(){
 				printf("Ta errado"); //---:> acho melhor botar no view
 		}
 	}while(0)
+	
+	//bom dia, segue os arquivos zipados do grupo GIPV.
 
 	
 }
