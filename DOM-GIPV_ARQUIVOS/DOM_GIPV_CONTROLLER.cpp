@@ -5,12 +5,15 @@ void jogar(){
 	char op;
 	do{
 		
-		op=menuGeral();
+		op = menuGeral();
 		switch(op)
 		{
 			case '1':
-				prepararJogo();
-				IniciaJogo();
+				//prepararJogo(); // ---:> entrega as peças para os dois jogadores
+				//IniciaJogo(); // ---:> nao sei ainda
+				exibirPecas();
+				embaralharPecas();
+				exibirPecas();
 				break;
 			case '0':
 				exit(0);
@@ -18,9 +21,23 @@ void jogar(){
 			default:
 				printf("Ta errado"); //---:> acho melhor botar no view
 		}
-	}while(0)
+	}while(0);
 
+/*
+void primeiraJogada(){
 	
+}
+
+void jogadaJogador(){
+	
+}
+
+void jogadaComputador(){
+	
+}
+*/
+
+
 }
 
 

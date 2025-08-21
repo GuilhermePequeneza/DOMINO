@@ -10,71 +10,38 @@ void exibirPecas() {
 		printf("[%d|",pecas[i].lado1);
 		printf("%d] ",pecas[i].lado2);
 	}
-}
-
-void pecasOrdenadas(){ //----> EXIBIR PECAS EM ORDEM
-	for(int i = 0; i<=6; i++) {
-		for(int j = i; j<=6; j++) {
-			printf("[%d|%d] ", i, j);
-		}
-	}
+	printf("\n");
 }
 
 
-void menu(){
-
-	char menu;
-
-	gerarPecas();
-
-	printf("Pecas Organizadas:\n");
-	exibirPecas();
-
-	printf("\n\n");
-
-	system("pause");
-
-	embaralharPecas();
-
-	printf("\nPecas Embaralhadas:\n");
-	exibirPecas();
-
-	
+char menuGeral(){
+	char op;
 	do {
-
+		printf("1 - Mostrar Peças\n");
+		printf("0 - SAIR\n");
+		op = getchar();
 		
-
-		printf("\n\n");
-
-		printf("0. Sair\n1. Embaralhar novamente\n2. Pecas em ordem\n");
-
-		printf("Digite a opcao desejada: ");
-		scanf("%c", &menu);
-		fclear();
-
-        //---:> MENU
-		switch (menu) {
-		case '0':
-			break;
-		case '1':
-		    printf("\nNovo embaralhamento: \n");
-		    embaralharPecas();
-		    exibirPecas();
-		    break;
-		case '2':
-			printf("Pecas ordenadas:\n");
-			pecasOrdenadas();
-			break;
-		default:
-			printf("Opcao Invalida");
-			break;
+		if(op <= '0' || op >= '1'){
+			return op;
 		}
-		
-	} while(menu != '0');
-	
-	
+	} while(1);
 	
 }
+
+char menuJogador(){
+	// ---:> opcoes do jogador doq fazer
+}
+
+void apresentarMesa(){
+	// ---:> Mostrar pessas na mesa
+}
+
+void apresentarPecasJogador(int jogador){
+	// ---:> Apresentar pessas de um jogador especifico
+	// ---:> qual pessa jogar
+	// ---:> qual lado da mesa jogar (se necessario escolher)
+}
+
 
 
 

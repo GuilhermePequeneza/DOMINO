@@ -1,10 +1,8 @@
 #include<stdio.h>
 
 
-void menu();
+char menuGeral();
 
 void exibirPecas();
-
-void pecasOrdenadas();
 
 void fclear();
