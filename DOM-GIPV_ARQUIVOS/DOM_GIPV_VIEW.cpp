@@ -19,6 +19,7 @@ int quantosJogadores(){
 	do{
        printf("Quantos Jogadores? ");
        scanf("%d", &quantJog);
+	   fclear();
        
  }while(quantJog == 0);
  return quantJog;
@@ -30,7 +31,6 @@ char menuGeral(){
 		printf("1 - Comecar Jogo\n");
 		printf("0 - SAIR\n");
 		op = getchar();
-		
 		if(op <= '0' || op >= '1'){
 			return op;
 		}
@@ -44,7 +44,7 @@ char menuJogador(){
 
 void apresentarMesa(){
 	for(int i = 0; i < 29; i++){
-		printf("%d",mesa[i]);
+		
 	}
 }
 

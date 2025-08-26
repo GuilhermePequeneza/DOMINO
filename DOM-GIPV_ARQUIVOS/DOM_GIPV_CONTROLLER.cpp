@@ -25,7 +25,7 @@ void jogar(){
 	}while(0);
 }
 
-int primeiraJogada() {
+char primeiraJogada() {
     int pecaMaior = 0;
     for(int i = 1; i < 14; i++) {
         int atualEhDupla = (pecas[i].lado1 == pecas[i].lado2);
@@ -55,21 +55,21 @@ int primeiraJogada() {
 
     // Agora decide qual jogador tem a peca maior
     if(pecaMaior < 7) {
-        return 1; // Jogador 1
-        mesa[1].ladoE = pecas[pecaMaior].lado1;
-        mesa[1].ladoD = pecas[pecaMaior].lado2;
-        vez = 2;
+        mesa.ladoE = pecas[pecaMaior].lado1;
+        mesa.ladoD = pecas[pecaMaior].lado2;
+        jogadorAtual = 2;
+        return '1'; // Jogador 1
     } else {
-        return 2; // Jogador 2
-        mesa[1].ladoE = pecas[pecaMaior].lado1;
-        mesa[1].ladoD = pecas[pecaMaior].lado2;
-        vez = 1;
+        
+        mesa.ladoE = pecas[pecaMaior].lado1;
+        mesa.ladoD = pecas[pecaMaior].lado2;
+        jogadorAtual = 1;
+        return '2'; // Jogador 2
     }
 }
 
 
 void prepararJogo(){
-	
 	for(int i = 0; i < 7; i++){
 		maoJogador[0][i] = i;
 		pecas[i].status = '1';
@@ -78,12 +78,12 @@ void prepararJogo(){
 		
 	}
 	jogadorAtual = primeiraJogada();
-	printf("jogador %d comeca\n\n", jogadorAtual);
+	printf("jogador %c comeca\n\n", jogadorAtual);
 }
 
-void jogadaJogador(int maoJogador, char jogador){
+/*void jogadaJogador(int maoJogador, char jogador){
 	int jogada = 0;
-	int livreDireita; // primeiro espaço livre na direita
+	int livreDireita; // primeiro espaco livre na direita
 	livreDireita = proximaJogada();
 	if(jogador == '1')
     {
@@ -91,7 +91,7 @@ void jogadaJogador(int maoJogador, char jogador){
            apresenta
            scanf("%d", &jogada);
            
-           if(mesa[1].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita
+           if(mesa[1].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
            {
                  //loop pra passar tudo pra direita
                  pecas[jogada].status = 'M';
@@ -107,22 +107,23 @@ void jogadaJogador(int maoJogador, char jogador){
     else{
          jogador = 1;
     }
-}
+}*/
+
 /*
 void jogadaComputador(){
 	
 }
 */
 
-// for loop vendo até quando o array mesa é diferente de 0
-//o i que for 0 é a próxima jogada
+// for loop vendo atï¿½ quando o array mesa ï¿½ diferente de 0
+//o i que for 0 ï¿½ a prï¿½xima jogada
 
-int proximaJogada(){
+/*int proximaJogada(){
     for(int i = 1; mesa[i] != 0; i++)
     {
-            return i;        
+            return i;                   //PARTE DE JOGAR FAZER DEPOIS.
     }
-}
+}*/
 
 
 

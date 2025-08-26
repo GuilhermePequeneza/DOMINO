@@ -1,6 +1,6 @@
 int maoJogador[2][21]; 
-int mesa[29];
-int vez;
+
+char jogadorAtual;
 
 struct peca {
 	int lado1;
@@ -11,7 +11,7 @@ struct peca {
 struct mesa{
 	int ladoE;
 	int ladoD;
-}; // PREENCHER POR FAVOR
+}mesa; // PREENCHER POR FAVOR
 
 void gerarpecas();
 void embaralharPecas();
