@@ -11,4 +11,4 @@ char menuJogador();
 
 void apresentarMesa();
 
-void apresentarPecasJogador(int jogador);
+void apresentarPecasJogador(char jogador);

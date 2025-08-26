@@ -17,7 +17,7 @@ void exibirPecas() {
 char menuGeral(){
 	char op;
 	do {
-		printf("1 - Mostrar Peças\n");
+		printf("1 - Comecar Jogo\n");
 		printf("0 - SAIR\n");
 		op = getchar();
 		
@@ -33,18 +33,21 @@ char menuJogador(){
 }
 
 void apresentarMesa(){
-	// ---:> Mostrar pessas na mesa
+	for(int i = 0; i < 29; i++){
+		printf("%d",mesa[i]);
+	}
 }
 
-void apresentarPecasJogador(){ // char jogador
+void apresentarPecasJogador(char jogador){ 
 	// ---:> DEPOIS Apresentar pessas de um jogador especifico
+	printf("----------------------------------------------------------------\n");
+	printf("Pecas do jogador %c\n\n",jogador);
 	for(int i = 0; i < 28; i++){
-		if(pecas[i].status == '1' || pecas[i].status == '2'){
-			printf("%d | %d,  %c", pecas[i].lado1, pecas[i].lado2, pecas[i].status);
+		if(pecas[i].status == jogador){
+			printf("%d|%d  ", pecas[i].lado1, pecas[i].lado2);
 		}
 	}
-	// ---:> qual pessa jogar
-	// ---:> qual lado da mesa jogar (se necessario escolher)
+	printf("\n----------------------------------------------------------------\n");
 }
 
 
