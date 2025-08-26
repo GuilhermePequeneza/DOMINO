@@ -14,3 +14,5 @@ void apresentarMesa();
 void apresentarPecasJogador(char jogador);
 
 int quantosJogadores();
+
+void limpaTela();

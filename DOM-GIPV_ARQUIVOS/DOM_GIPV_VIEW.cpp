@@ -68,4 +68,8 @@ void fclear(){
 	while( (carac = fgetc(stdin)) != EOF && carac != '\n'){}
 }
 
+void limpaTela(){
+	system("cls");
+}
+
 
