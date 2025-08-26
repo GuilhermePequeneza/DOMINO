@@ -11,7 +11,8 @@
 
 main()
 {
-	
+	quantosJogadores(); //VIEW
+	system("pause");
 	gerarPecas(); //--:> MODEL
 	jogar(); //--:> CONTROLLER
 	

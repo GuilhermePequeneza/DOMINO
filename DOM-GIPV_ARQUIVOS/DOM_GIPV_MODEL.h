@@ -1,5 +1,6 @@
 int maoJogador[2][21]; 
 int mesa[29];
+int vez;
 
 struct peca {
 	int lado1;

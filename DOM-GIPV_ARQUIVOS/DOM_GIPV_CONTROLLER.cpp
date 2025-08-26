@@ -56,8 +56,14 @@ int primeiraJogada() {
     // Agora decide qual jogador tem a peca maior
     if(pecaMaior < 7) {
         return 1; // Jogador 1
+        mesa[1].ladoE = pecas[pecaMaior].lado1;
+        mesa[1].ladoD = pecas[pecaMaior].lado2;
+        vez = 2;
     } else {
         return 2; // Jogador 2
+        mesa[1].ladoE = pecas[pecaMaior].lado1;
+        mesa[1].ladoD = pecas[pecaMaior].lado2;
+        vez = 1;
     }
 }
 
@@ -74,17 +80,49 @@ void prepararJogo(){
 	jogadorAtual = primeiraJogada();
 	printf("jogador %d comeca\n\n", jogadorAtual);
 }
-/*
-void jogadaJogador(int jogador){
-	
-}
 
+void jogadaJogador(int maoJogador, char jogador){
+	int jogada = 0;
+	int livreDireita; // primeiro espaço livre na direita
+	livreDireita = proximaJogada();
+	if(jogador == '1')
+    {
+           printf("Que peca voce quer jogar?\n");
+           apresenta
+           scanf("%d", &jogada);
+           
+           if(mesa[1].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita
+           {
+                 //loop pra passar tudo pra direita
+                 pecas[jogada].status = 'M';
+           }
+           else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado1)
+           {
+                mesa[livreDireita] = jogada;
+                mesa[livreDireita].ladoD = peca[jogada].lado2;
+                pecas[jogada].status = 'M';
+           }
+           jogador = 2;
+    }
+    else{
+         jogador = 1;
+    }
+}
+/*
 void jogadaComputador(){
 	
 }
 */
 
+// for loop vendo até quando o array mesa é diferente de 0
+//o i que for 0 é a próxima jogada
 
+int proximaJogada(){
+    for(int i = 1; mesa[i] != 0; i++)
+    {
+            return i;        
+    }
+}
 
 
 

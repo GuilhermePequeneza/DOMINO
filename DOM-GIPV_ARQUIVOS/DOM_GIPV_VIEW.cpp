@@ -13,9 +13,19 @@ void exibirPecas() {
 	printf("\n");
 }
 
-
+int quantosJogadores(){
+     int quantJog = 0;
+     	//Definir quantidade de jogadores
+	do{
+       printf("Quantos Jogadores? ");
+       scanf("%d", &quantJog);
+       
+ }while(quantJog == 0);
+ return quantJog;
+     }
 char menuGeral(){
 	char op;
+
 	do {
 		printf("1 - Comecar Jogo\n");
 		printf("0 - SAIR\n");
