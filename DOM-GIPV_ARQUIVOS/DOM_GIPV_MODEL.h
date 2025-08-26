@@ -1,4 +1,4 @@
-int jogador[2][21];
+int maoJogador[2][21]; 
 int mesa[29];
 
 struct peca {
@@ -8,7 +8,8 @@ struct peca {
 } pecas[28];
 
 struct mesa{
-	
+	int ladoE;
+	int ladoD;
 }; // PREENCHER POR FAVOR
 
 void gerarpecas();
