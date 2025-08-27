@@ -17,7 +17,7 @@ int quantosJogadores(){
      int quantJog = 0;
      	//Definir quantidade de jogadores
 	do{
-       printf("Quantos Jogadores? ");
+       printf("Quantos Jogadores?\n");
        scanf("%d", &quantJog);
 	   fclear();
        
@@ -28,6 +28,7 @@ char menuGeral(){
 	char op;
 
 	do {
+		limpaTela();
 		printf("1 - Comecar Jogo\n");
 		printf("0 - SAIR\n");
 		op = getchar();
@@ -59,9 +60,6 @@ void apresentarPecasJogador(char jogador){
 	}
 	printf("\n----------------------------------------------------------------\n");
 }
-
-
-
 
 void fclear(){
 	char carac;

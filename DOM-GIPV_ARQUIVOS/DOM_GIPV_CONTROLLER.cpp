@@ -4,8 +4,8 @@
 void jogar(){
 	char op;
 	do{
-		
 		op = menuGeral();
+		limpaTela();
 		switch(op)
 		{
 			case '1':
@@ -78,7 +78,7 @@ void prepararJogo(){
 		
 	}
 	jogadorAtual = primeiraJogada();
-	printf("jogador %c comeca\n\n", jogadorAtual);
+	printf("Jogador %c comeca\n\n", jogadorAtual);
 }
 
 /*void jogadaJogador(int maoJogador, char jogador){

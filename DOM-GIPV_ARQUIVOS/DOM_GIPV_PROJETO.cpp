@@ -12,7 +12,7 @@
 main()
 {
 	quantosJogadores(); //VIEW
-	system("pause");
+	//system("pause");
 	gerarPecas(); //--:> MODEL
 	jogar(); //--:> CONTROLLER
 	
