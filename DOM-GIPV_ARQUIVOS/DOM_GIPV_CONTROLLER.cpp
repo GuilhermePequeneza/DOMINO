@@ -84,6 +84,8 @@ void prepararJogo(){
 
 /void jogadaJogador(int maoJogador, char jogador){
 	int jogada = 0;
+	int tempE;
+	int tempD;
 	int livreDireita; // primeiro espaco livre na direita
 	livreDireita = proximaJogada();
 	if(jogador == '1')
@@ -92,9 +94,22 @@ void prepararJogo(){
            apresenta
            scanf("%d", &jogada);
            
-           if(mesa[1].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
+           if(mesa[0].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
            {
-                 //loop pra passar tudo pra direita
+                 for(int i = 0;i<livreDireita;i++){
+                 	
+                 	tempE = mesa[i+1].ladoE;
+                 	tempD = mesa[i+1].ladoD;
+                 	if(i>0){
+                 		mesa[i+1].ladoE = tempE;
+                 		mesa[i+1].ladoD = tempD;
+					}
+					else{
+						mesa[i+1].ladoE = mesa[i].ladoE;
+                 		mesa[i+1].ladoD = mesa[i].ladoD;
+					}
+                 	
+				 }
                  pecas[jogada].status = 'M';
            }
            else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado1)
