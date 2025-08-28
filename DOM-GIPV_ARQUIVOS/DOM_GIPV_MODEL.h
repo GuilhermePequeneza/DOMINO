@@ -11,6 +11,7 @@ struct peca {
 struct mesa{
 	int ladoE;
 	int ladoD;
+	char status = '0'; // '0', '1'
 }mesa[28]; // PREENCHER POR FAVOR
 
 void gerarpecas();

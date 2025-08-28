@@ -1,7 +1,7 @@
 void jogar();
 void prepararJogo();
 char primeiraJogada();
-//void jogadaJogador(int maoJogador);
+void jogadaJogador(char jogador);
 //void jogadaComputador();
-//int proximaJogada();
+int proximaJogada();
 
