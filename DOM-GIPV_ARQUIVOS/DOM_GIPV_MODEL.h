@@ -11,7 +11,7 @@ struct peca {
 struct mesa{
 	int ladoE;
 	int ladoD;
-}mesa; // PREENCHER POR FAVOR
+}mesa[28]; // PREENCHER POR FAVOR
 
 void gerarpecas();
 void embaralharPecas();

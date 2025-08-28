@@ -21,12 +21,13 @@ int quantosJogadores(){
        scanf("%d", &quantJog);
 	   fclear();
        
- }while(quantJog == 0);
- return quantJog;
-     }
+ 	}while(quantJog == 0);
+ 	return quantJog;
+}
+	
 char menuGeral(){
 	char op;
-
+	
 	do {
 		limpaTela();
 		printf("1 - Comecar Jogo\n");

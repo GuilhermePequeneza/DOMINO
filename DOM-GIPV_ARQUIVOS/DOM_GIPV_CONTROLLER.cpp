@@ -60,12 +60,12 @@ char primeiraJogada() {
         jogadorAtual = 2;
         return '1'; // Jogador 1
     } else {
-        
         mesa.ladoE = pecas[pecaMaior].lado1;
         mesa.ladoD = pecas[pecaMaior].lado2;
         jogadorAtual = 1;
         return '2'; // Jogador 2
     }
+    
 }
 
 
@@ -79,9 +79,10 @@ void prepararJogo(){
 	}
 	jogadorAtual = primeiraJogada();
 	printf("Jogador %c comeca\n\n", jogadorAtual);
+	
 }
 
-/*void jogadaJogador(int maoJogador, char jogador){
+/void jogadaJogador(int maoJogador, char jogador){
 	int jogada = 0;
 	int livreDireita; // primeiro espaco livre na direita
 	livreDireita = proximaJogada();
