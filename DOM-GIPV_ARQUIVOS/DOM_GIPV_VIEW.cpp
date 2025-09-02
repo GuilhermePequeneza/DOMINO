@@ -45,8 +45,8 @@ char menuJogador(){
 }
 
 void apresentarMesa(){
-	for(int i = 0; i < 29; i++){
-		
+	for(int i = 0; mesa[i].status != '0'; i++){
+		printf("%d|%d ",mesa[i].ladoE, mesa[i].ladoD);
 	}
 }
 

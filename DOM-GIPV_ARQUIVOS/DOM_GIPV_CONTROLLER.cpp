@@ -17,6 +17,10 @@ void jogar(){
                 apresentarMesa();
                 printf("\n\n");
 				apresentarPecasJogador('2');
+				jogadaJogador('1');
+				printf("\n\n\n\nn\n\n\n\n\n\n\n");
+				apresentarMesa();
+				
 				break;
 			case '0':
 				exit(0);
@@ -27,6 +31,7 @@ void jogar(){
 
 char primeiraJogada() {
     int pecaMaior = 0;
+    mesa[0].status = '1';
     for(int i = 1; i < 14; i++) {
         int atualEhDupla = (pecas[i].lado1 == pecas[i].lado2);
         int maiorEhDupla = (pecas[pecaMaior].lado1 == pecas[pecaMaior].lado2);
@@ -55,13 +60,13 @@ char primeiraJogada() {
 
     // Agora decide qual jogador tem a peca maior
     if(pecaMaior < 7) {
-        mesa.ladoE = pecas[pecaMaior].lado1;
-        mesa.ladoD = pecas[pecaMaior].lado2;
+        mesa[0].ladoE = pecas[pecaMaior].lado1;
+        mesa[0].ladoD = pecas[pecaMaior].lado2;
         jogadorAtual = 2;
         return '1'; // Jogador 1
     } else {
-        mesa.ladoE = pecas[pecaMaior].lado1;
-        mesa.ladoD = pecas[pecaMaior].lado2;
+        mesa[0].ladoE = pecas[pecaMaior].lado1;
+        mesa[0].ladoD = pecas[pecaMaior].lado2;
         jogadorAtual = 1;
         return '2'; // Jogador 2
     }
@@ -82,7 +87,7 @@ void prepararJogo(){
 	
 }
 
-/void jogadaJogador(int maoJogador, char jogador){
+void jogadaJogador(char jogador){
 	int jogada = 0;
 	int tempE;
 	int tempD;
@@ -91,12 +96,13 @@ void prepararJogo(){
 	if(jogador == '1')
     {
            printf("Que peca voce quer jogar?\n");
-           apresenta
+           exibirPecas();
            scanf("%d", &jogada);
            
            if(mesa[0].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
            {
-                 for(int i = 0;i<livreDireita;i++){
+           		mesa[livreDireita].status = '1';
+                for(int i = 0;i<livreDireita;i++){
                  	
                  	tempE = mesa[i+1].ladoE;
                  	tempD = mesa[i+1].ladoD;
@@ -110,12 +116,43 @@ void prepararJogo(){
 					}
                  	
 				 }
+				 mesa[0].ladoD = pecas[jogada].lado2;
+				 mesa[0].ladoE = pecas[jogada].lado1;
+                 pecas[jogada].status = 'M';
+           }
+           else if(mesa[0].ladoE == pecas[jogada].lado1) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
+           {
+           		mesa[livreDireita].status = '1';
+                for(int i = 0;i<livreDireita;i++){
+                 	
+                 	tempE = mesa[i+1].ladoE;
+                 	tempD = mesa[i+1].ladoD;
+                 	if(i>0){
+                 		mesa[i+1].ladoE = tempE;
+                 		mesa[i+1].ladoD = tempD;
+					}
+					else{
+						mesa[i+1].ladoE = mesa[i].ladoE;
+                 		mesa[i+1].ladoD = mesa[i].ladoD;
+					}
+                 	
+				 }
+				 mesa[0].ladoD = pecas[jogada].lado1;
+				 mesa[0].ladoE = pecas[jogada].lado2;
                  pecas[jogada].status = 'M';
            }
            else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado1)
            {
-                mesa[livreDireita] = jogada;
-                mesa[livreDireita].ladoD = peca[jogada].lado2;
+           		mesa[livreDireita].status = '1';
+                mesa[livreDireita].ladoD = pecas[jogada].lado2;
+                mesa[livreDireita].ladoE = pecas[jogada].lado1;
+                pecas[jogada].status = 'M';
+           }
+           else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado2)
+           {
+           	    mesa[livreDireita].status = '1';
+                mesa[livreDireita].ladoD = pecas[jogada].lado1;
+                mesa[livreDireita].ladoE = pecas[jogada].lado2;
                 pecas[jogada].status = 'M';
            }
            jogador = 2;
@@ -123,7 +160,7 @@ void prepararJogo(){
     else{
          jogador = 1;
     }
-}*/
+}
 
 /*
 void jogadaComputador(){
@@ -134,12 +171,11 @@ void jogadaComputador(){
 // for loop vendo at� quando o array mesa � diferente de 0
 //o i que for 0 � a pr�xima jogada
 
-/*int proximaJogada(){
-    for(int i = 1; mesa[i] != 0; i++)
-    {
-            return i;                   //PARTE DE JOGAR FAZER DEPOIS.
-    }
-}*/
+int proximaJogada(){
+	int i;
+    for(i = 0; mesa[i].status != '0'; i++);
+    return i;
+}
 
 
 
