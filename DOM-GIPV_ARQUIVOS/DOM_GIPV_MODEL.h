@@ -5,7 +5,7 @@ char jogadorAtual;
 struct peca {
 	int lado1;
 	int lado2;
-	char status = 'NULL'; //NULL,'1','2','M'
+	char status = 'N'; //NULL,'1','2','M'
 } pecas[28];
 
 struct mesa{

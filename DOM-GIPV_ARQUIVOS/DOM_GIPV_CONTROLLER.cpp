@@ -12,15 +12,17 @@ void jogar(){
 				embaralharPecas();
 				prepararJogo(); // ---:> entrega as pecas para os dois jogadores
 				//IniciaJogo(); // ---:> nao sei ainda
-				apresentarPecasJogador('1');
-				printf("\n");
+				//apresentarPecasJogador('1');
+				//printf("\n");
                 apresentarMesa();
                 printf("\n\n");
-				apresentarPecasJogador('2');
+				//apresentarPecasJogador('2');
 				jogadaJogador('1');
-				printf("\n\n\n\nn\n\n\n\n\n\n\n");
+				printf("\n\n\n\n\n\n\n\n\n\n\n");
 				apresentarMesa();
-				
+				printf("\n");
+				apresentarPecasJogador('1');
+				apresentarPecasJogador('2');
 				break;
 			case '0':
 				exit(0);
@@ -63,11 +65,13 @@ char primeiraJogada() {
         mesa[0].ladoE = pecas[pecaMaior].lado1;
         mesa[0].ladoD = pecas[pecaMaior].lado2;
         jogadorAtual = 2;
+        pecas[pecaMaior].status = 'M';
         return '1'; // Jogador 1
     } else {
         mesa[0].ladoE = pecas[pecaMaior].lado1;
         mesa[0].ladoD = pecas[pecaMaior].lado2;
         jogadorAtual = 1;
+        pecas[pecaMaior].status = 'M';
         return '2'; // Jogador 2
     }
     
@@ -88,7 +92,8 @@ void prepararJogo(){
 }
 
 void jogadaJogador(char jogador){
-	int jogada = 0;
+	system("pause");
+ 	int jogada = 0;
 	int tempE;
 	int tempD;
 	int livreDireita; // primeiro espaco livre na direita
@@ -96,7 +101,7 @@ void jogadaJogador(char jogador){
 	if(jogador == '1')
     {
            printf("Que peca voce quer jogar?\n");
-           exibirPecas();
+           apresentarPecasJogador(jogador);
            scanf("%d", &jogada);
            
            if(mesa[0].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
@@ -158,7 +163,67 @@ void jogadaJogador(char jogador){
            jogador = 2;
     }
     else{
-         jogador = 1;
+           printf("Que peca voce quer jogar?\n");
+           apresentarPecasJogador(jogador);
+           scanf("%d", &jogada);
+           
+           if(mesa[0].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
+           {
+           		mesa[livreDireita].status = '1';
+                for(int i = 0;i<livreDireita;i++){
+                 	
+                 	tempE = mesa[i+1].ladoE;
+                 	tempD = mesa[i+1].ladoD;
+                 	if(i>0){
+                 		mesa[i+1].ladoE = tempE;
+                 		mesa[i+1].ladoD = tempD;
+					}
+					else{
+						mesa[i+1].ladoE = mesa[i].ladoE;
+                 		mesa[i+1].ladoD = mesa[i].ladoD;
+					}
+                 	
+				 }
+				 mesa[0].ladoD = pecas[jogada].lado2;
+				 mesa[0].ladoE = pecas[jogada].lado1;
+                 pecas[jogada].status = 'M';
+           }
+           else if(mesa[0].ladoE == pecas[jogada].lado1) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
+           {
+           		mesa[livreDireita].status = '1';
+                for(int i = 0;i<livreDireita;i++){
+                 	
+                 	tempE = mesa[i+1].ladoE;
+                 	tempD = mesa[i+1].ladoD;
+                 	if(i>0){
+                 		mesa[i+1].ladoE = tempE;
+                 		mesa[i+1].ladoD = tempD;
+					}
+					else{
+						mesa[i+1].ladoE = mesa[i].ladoE;
+                 		mesa[i+1].ladoD = mesa[i].ladoD;
+					}
+                 	
+				 }
+				 mesa[0].ladoD = pecas[jogada].lado1;
+				 mesa[0].ladoE = pecas[jogada].lado2;
+                 pecas[jogada].status = 'M';
+           }
+           else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado1)
+           {
+           		mesa[livreDireita].status = '1';
+                mesa[livreDireita].ladoD = pecas[jogada].lado2;
+                mesa[livreDireita].ladoE = pecas[jogada].lado1;
+                pecas[jogada].status = 'M';
+           }
+           else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado2)
+           {
+           	    mesa[livreDireita].status = '1';
+                mesa[livreDireita].ladoD = pecas[jogada].lado1;
+                mesa[livreDireita].ladoE = pecas[jogada].lado2;
+                pecas[jogada].status = 'M';
+           }
+           jogador = 1;
     }
 }
 
