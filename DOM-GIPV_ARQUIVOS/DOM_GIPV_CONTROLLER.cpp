@@ -17,7 +17,9 @@ void jogar(){
                 apresentarMesa();
                 printf("\n\n");
 				//apresentarPecasJogador('2');
+				
 				jogadaJogador('1');
+				printf("debug2");
 				printf("\n\n\n\n\n\n\n\n\n\n\n");
 				apresentarMesa();
 				printf("\n");

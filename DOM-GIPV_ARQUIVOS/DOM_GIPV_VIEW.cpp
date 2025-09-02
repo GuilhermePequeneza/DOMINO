@@ -42,6 +42,8 @@ char menuGeral(){
 
 char menuJogador(char jogador){
 	char op;
+	limpaTela();
+	apresentarMesa();
 	printf("----------------------------------------------------------------\n");
 	printf("Vez do jogador %c\n\n",jogador);
 	printf("\n----------------------------------------------------------------\n");
