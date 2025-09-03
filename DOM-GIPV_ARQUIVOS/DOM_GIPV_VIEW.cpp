@@ -17,7 +17,7 @@ int quantosJogadores(){
      int quantJog = 0;
      	//Definir quantidade de jogadores
 	do{
-       printf("Quantos Jogadores?\n");
+       printf("Quantos Jogadores(1 ou 2)?\n");
        scanf("%d", &quantJog);
 	   fclear();
        
@@ -32,6 +32,7 @@ char menuGeral(){
 		limpaTela();
 		printf("1 - Comecar Jogo\n");
 		printf("0 - SAIR\n");
+		printf("Escolha uma opcao: ");
 		op = getchar();
 		fclear();
 		if(op <= '0' || op >= '1'){
@@ -50,10 +51,12 @@ char menuJogador(char jogador){
 	printf("----------------------------------------------------------------\n");
 	apresentarPecasJogador(JOGADOR_ATUAL);
 	do{
+		
 		printf("0 - Acabar\n");
 		printf("1 - Jogar\n");
 		printf("2 - Comprar\n");
 		printf("3 - Passar\n");
+		printf("Escolha uma opcao: ");
 		op = getchar();
 		fclear();
 		if(op >= '0' || op <= '3')
@@ -71,7 +74,7 @@ void apresentarMesa(){
 	printf("Mesa:\n\n");
 	
 	for(int i = 0; mesa[i].status != '0'; i++){
-		printf("%d|%d ",mesa[i].ladoE, mesa[i].ladoD);
+		printf("[%d|%d] ",mesa[i].ladoE, mesa[i].ladoD);
 	}
 	printf("\n\n");
 	
@@ -83,7 +86,7 @@ void apresentarPecasJogador(char jogador){
 	printf("Pecas do jogador %c\n\n",JOGADOR_ATUAL);
 	for(int i = 0; i < 28; i++){
 		if(pecas[i].status == JOGADOR_ATUAL){
-			printf("%d. [%d|%d] ", i, pecas[i].lado1, pecas[i].lado2);
+			printf("%d.[%d|%d]  ", i, pecas[i].lado1, pecas[i].lado2);
 		}
 	}
 	printf("\n----------------------------------------------------------------\n");

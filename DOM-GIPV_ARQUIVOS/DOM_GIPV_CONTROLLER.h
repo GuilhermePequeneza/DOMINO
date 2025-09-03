@@ -5,6 +5,7 @@ void jogadaJogador(char jogador);
 //void jogadaComputador();
 int proximaJogada();
 void comprarPecas(char jogador);
+int finalizarJogo();
 
 
 

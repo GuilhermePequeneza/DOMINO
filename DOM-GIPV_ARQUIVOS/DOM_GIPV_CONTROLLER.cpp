@@ -4,6 +4,7 @@
 void jogar(){
 	char op;
 	do{
+		finalizarJogo();
 		op = menuGeral();
 		limpaTela();
 		switch(op)
@@ -17,6 +18,9 @@ void jogar(){
 					{
 						case '1':
 							jogadaJogador(JOGADOR_ATUAL);
+							
+							//printf("return: %d ",finalizarJogo() );
+							
 							break;
 						case '2':
 							comprarPecas(JOGADOR_ATUAL);
@@ -26,9 +30,10 @@ void jogar(){
 								JOGADOR_ATUAL = '2';
 							else
 								JOGADOR_ATUAL = '1';
+								limpaTela();
 							break;
 					}
-				}while(op != '0');
+				}while(op != '0' && finalizarJogo() == 0);
 				break;
 			case '0':
 				exit(0);
@@ -103,10 +108,10 @@ void jogadaJogador(char jogador){
 	limpaTela();
 	apresentarMesa();
  	int jogada = 0;
-	int erro = 0;
+	int erro = 0; //se o erro for 1 ele repete o jogador para refazer a jogada, se for 0 passqa a vez para o proximo 
 	int livreDireita; // primeiro espaco livre na direita
 	livreDireita = proximaJogada();
-	printf("Que peca voce quer jogar?\n");
+	printf("Qual peca voce quer jogar?\n");
 	apresentarPecasJogador(jogador);
 	scanf("%d", &jogada);
 	fclear();
@@ -151,8 +156,8 @@ void jogadaJogador(char jogador){
 	}
 	else{
 		printf("Peca invalida\n");
-		erro = 1;
-	}
+		system("pause");
+		erro = 1; }
 	if(erro == 0){
 	if(JOGADOR_ATUAL == '1')
 		JOGADOR_ATUAL = '2';
@@ -191,7 +196,37 @@ void comprarPecas(char jogador)
 	}
   if(i>=28)
     printf("Nada a comprar");
+    system("pause");
+    limpaTela();
   }
 
  /// 12, 14, 15
+ 
+int finalizarJogo(){
+	int count1 = 0;
+	int count2 = 0;
+	for(int i = 0; i < 28; i++){
+		if(pecas[i].status == '1'){
+			count1++;
+		}
+			if(pecas[i].status == '2'){
+			count2++;
+		}
+		if(count1 > 0 && count2 > 0){
+			break;
+		}
+	}
+	if(count1 == 0){
+		printf("Jogador 1 Venceu :() xd");
+		return 1;
+		
+	}
+	if(count2 == 0){
+		printf("Jogador 2 Venceu :() xd");
+		return 2;
+	}
+	else{
+		return 0;
+	}
+}
 
