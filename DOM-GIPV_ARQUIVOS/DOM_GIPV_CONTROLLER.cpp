@@ -91,7 +91,7 @@ void prepararJogo(){
 		
 	}
 	JOGADOR_ATUAL = primeiraJogada();
-	printf("Jogador %c comeca\n\n", JOGADOR_ATUAL);
+	printf("Jogador %c comecou\n\n", JOGADOR_ATUAL);
 	if(JOGADOR_ATUAL == '1')
 		JOGADOR_ATUAL = '2';
 	else{
@@ -100,6 +100,8 @@ void prepararJogo(){
 
 void jogadaJogador(char jogador){
 	system("pause");
+	limpaTela();
+	apresentarMesa();
  	int jogada = 0;
 	int erro = 0;
 	int livreDireita; // primeiro espaco livre na direita
@@ -157,6 +159,7 @@ void jogadaJogador(char jogador){
 	else
 		JOGADOR_ATUAL = '1';
 	}
+	limpaTela();
 }
 
 /*

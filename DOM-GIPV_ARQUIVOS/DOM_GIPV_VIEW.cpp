@@ -68,15 +68,13 @@ char menuJogador(char jogador){
 }
 
 void apresentarMesa(){
-	if(mesa[0].status == '0'){
-		printf("Mesa Vazia\n");
+	printf("Mesa:\n\n");
+	
+	for(int i = 0; mesa[i].status != '0'; i++){
+		printf("%d|%d ",mesa[i].ladoE, mesa[i].ladoD);
 	}
-	else{
-		for(int i = 0; mesa[i].status != '0'; i++){
-			printf("%d|%d ",mesa[i].ladoE, mesa[i].ladoD);
-		}
-		printf("\n");
-	}
+	printf("\n\n");
+	
 }
 
 void apresentarPecasJogador(char jogador){ 
@@ -85,7 +83,7 @@ void apresentarPecasJogador(char jogador){
 	printf("Pecas do jogador %c\n\n",JOGADOR_ATUAL);
 	for(int i = 0; i < 28; i++){
 		if(pecas[i].status == JOGADOR_ATUAL){
-			printf("%d. %d|%d  ", i, pecas[i].lado1, pecas[i].lado2);
+			printf("%d. [%d|%d] ", i, pecas[i].lado1, pecas[i].lado2);
 		}
 	}
 	printf("\n----------------------------------------------------------------\n");
