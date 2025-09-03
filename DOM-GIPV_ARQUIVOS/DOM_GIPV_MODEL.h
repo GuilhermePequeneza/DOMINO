@@ -1,6 +1,6 @@
 int maoJogador[2][21]; 
 
-char jogadorAtual;
+char JOGADOR_ATUAL; //JOGADOR_ATUAL
 
 struct peca {
 	int lado1;

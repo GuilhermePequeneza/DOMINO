@@ -10,21 +10,25 @@ void jogar(){
 		{
 			case '1':
 				embaralharPecas();
-				prepararJogo(); // ---:> entrega as pecas para os dois jogadores
-				//IniciaJogo(); // ---:> nao sei ainda
-				//apresentarPecasJogador('1');
-				//printf("\n");
-                apresentarMesa();
-                printf("\n\n");
-				//apresentarPecasJogador('2');
-				
-				jogadaJogador('1');
-				printf("debug2");
-				printf("\n\n\n\n\n\n\n\n\n\n\n");
-				apresentarMesa();
-				printf("\n");
-				apresentarPecasJogador('1');
-				apresentarPecasJogador('2');
+				prepararJogo();
+				do{
+					op = menuJogador(JOGADOR_ATUAL);
+					switch(op)
+					{
+						case '1':
+							jogadaJogador(JOGADOR_ATUAL);
+							break;
+						case '2':
+							comprarPecas(JOGADOR_ATUAL);
+							break;
+						case '3':
+							if(JOGADOR_ATUAL == '1')
+								JOGADOR_ATUAL = '2';
+							else
+								JOGADOR_ATUAL = '1';
+							break;
+					}
+				}while(op != '0');
 				break;
 			case '0':
 				exit(0);
@@ -66,13 +70,11 @@ char primeiraJogada() {
     if(pecaMaior < 7) {
         mesa[0].ladoE = pecas[pecaMaior].lado1;
         mesa[0].ladoD = pecas[pecaMaior].lado2;
-        jogadorAtual = 2;
         pecas[pecaMaior].status = 'M';
         return '1'; // Jogador 1
     } else {
         mesa[0].ladoE = pecas[pecaMaior].lado1;
         mesa[0].ladoD = pecas[pecaMaior].lado2;
-        jogadorAtual = 1;
         pecas[pecaMaior].status = 'M';
         return '2'; // Jogador 2
     }
@@ -88,145 +90,73 @@ void prepararJogo(){
 		pecas[i + 7].status = '2';
 		
 	}
-	jogadorAtual = primeiraJogada();
-	printf("Jogador %c comeca\n\n", jogadorAtual);
-	
+	JOGADOR_ATUAL = primeiraJogada();
+	printf("Jogador %c comeca\n\n", JOGADOR_ATUAL);
+	if(JOGADOR_ATUAL == '1')
+		JOGADOR_ATUAL = '2';
+	else{
+		JOGADOR_ATUAL = '1';}
 }
 
 void jogadaJogador(char jogador){
 	system("pause");
  	int jogada = 0;
-	int tempE;
-	int tempD;
+	int erro = 0;
 	int livreDireita; // primeiro espaco livre na direita
 	livreDireita = proximaJogada();
-	if(jogador == '1')
-    {
-           printf("Que peca voce quer jogar?\n");
-           apresentarPecasJogador(jogador);
-           scanf("%d", &jogada);
-           
-           if(mesa[0].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
-           {
-           		mesa[livreDireita].status = '1';
-                for(int i = 0;i<livreDireita;i++){
-                 	
-                 	tempE = mesa[i+1].ladoE;
-                 	tempD = mesa[i+1].ladoD;
-                 	if(i>0){
-                 		mesa[i+1].ladoE = tempE;
-                 		mesa[i+1].ladoD = tempD;
-					}
-					else{
-						mesa[i+1].ladoE = mesa[i].ladoE;
-                 		mesa[i+1].ladoD = mesa[i].ladoD;
-					}
-                 	
-				 }
-				 mesa[0].ladoD = pecas[jogada].lado2;
-				 mesa[0].ladoE = pecas[jogada].lado1;
-                 pecas[jogada].status = 'M';
-           }
-           else if(mesa[0].ladoE == pecas[jogada].lado1) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
-           {
-           		mesa[livreDireita].status = '1';
-                for(int i = 0;i<livreDireita;i++){
-                 	
-                 	tempE = mesa[i+1].ladoE;
-                 	tempD = mesa[i+1].ladoD;
-                 	if(i>0){
-                 		mesa[i+1].ladoE = tempE;
-                 		mesa[i+1].ladoD = tempD;
-					}
-					else{
-						mesa[i+1].ladoE = mesa[i].ladoE;
-                 		mesa[i+1].ladoD = mesa[i].ladoD;
-					}
-                 	
-				 }
-				 mesa[0].ladoD = pecas[jogada].lado1;
-				 mesa[0].ladoE = pecas[jogada].lado2;
-                 pecas[jogada].status = 'M';
-           }
-           else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado1)
-           {
-           		mesa[livreDireita].status = '1';
-                mesa[livreDireita].ladoD = pecas[jogada].lado2;
-                mesa[livreDireita].ladoE = pecas[jogada].lado1;
-                pecas[jogada].status = 'M';
-           }
-           else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado2)
-           {
-           	    mesa[livreDireita].status = '1';
-                mesa[livreDireita].ladoD = pecas[jogada].lado1;
-                mesa[livreDireita].ladoE = pecas[jogada].lado2;
-                pecas[jogada].status = 'M';
-           }
-           jogador = 2;
-    }
-    else{
-           printf("Que peca voce quer jogar?\n");
-           apresentarPecasJogador(jogador);
-           scanf("%d", &jogada);
-           
-           if(mesa[0].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
-           {
-           		mesa[livreDireita].status = '1';
-                for(int i = 0;i<livreDireita;i++){
-                 	
-                 	tempE = mesa[i+1].ladoE;
-                 	tempD = mesa[i+1].ladoD;
-                 	if(i>0){
-                 		mesa[i+1].ladoE = tempE;
-                 		mesa[i+1].ladoD = tempD;
-					}
-					else{
-						mesa[i+1].ladoE = mesa[i].ladoE;
-                 		mesa[i+1].ladoD = mesa[i].ladoD;
-					}
-                 	
-				 }
-				 mesa[0].ladoD = pecas[jogada].lado2;
-				 mesa[0].ladoE = pecas[jogada].lado1;
-                 pecas[jogada].status = 'M';
-           }
-           else if(mesa[0].ladoE == pecas[jogada].lado1) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
-           {
-           		mesa[livreDireita].status = '1';
-                for(int i = 0;i<livreDireita;i++){
-                 	
-                 	tempE = mesa[i+1].ladoE;
-                 	tempD = mesa[i+1].ladoD;
-                 	if(i>0){
-                 		mesa[i+1].ladoE = tempE;
-                 		mesa[i+1].ladoD = tempD;
-					}
-					else{
-						mesa[i+1].ladoE = mesa[i].ladoE;
-                 		mesa[i+1].ladoD = mesa[i].ladoD;
-					}
-                 	
-				 }
-				 mesa[0].ladoD = pecas[jogada].lado1;
-				 mesa[0].ladoE = pecas[jogada].lado2;
-                 pecas[jogada].status = 'M';
-           }
-           else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado1)
-           {
-           		mesa[livreDireita].status = '1';
-                mesa[livreDireita].ladoD = pecas[jogada].lado2;
-                mesa[livreDireita].ladoE = pecas[jogada].lado1;
-                pecas[jogada].status = 'M';
-           }
-           else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado2)
-           {
-           	    mesa[livreDireita].status = '1';
-                mesa[livreDireita].ladoD = pecas[jogada].lado1;
-                mesa[livreDireita].ladoE = pecas[jogada].lado2;
-                pecas[jogada].status = 'M';
-           }
-           jogador = 1;
-    }
+	printf("Que peca voce quer jogar?\n");
+	apresentarPecasJogador(jogador);
+	scanf("%d", &jogada);
+	fclear();
+	if(pecas[jogada].status != JOGADOR_ATUAL)
+		erro = 1;
+	if(mesa[0].ladoE == pecas[jogada].lado2 && erro == 0) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
+	{
+		mesa[livreDireita].status = '1';
+		for (int i = livreDireita; i > 0; i--) {
+			mesa[i].ladoD = mesa[i - 1].ladoD;
+			mesa[i].ladoE = mesa[i - 1].ladoE;
+		}
+		mesa[0].ladoD = pecas[jogada].lado2;
+		mesa[0].ladoE = pecas[jogada].lado1;
+		pecas[jogada].status = 'M';
+	}
+	else if(mesa[0].ladoE == pecas[jogada].lado1 && erro == 0) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
+	{
+		mesa[livreDireita].status = '1';
+		for (int i = livreDireita; i > 0; i--) {
+			mesa[i].ladoD = mesa[i - 1].ladoD;
+			mesa[i].ladoE = mesa[i - 1].ladoE;
+		}
+		mesa[0].ladoE = pecas[jogada].lado2;
+		mesa[0].ladoD = pecas[jogada].lado1;
+		pecas[jogada].status = 'M';
+
+	}
+	else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado1 && erro == 0)
+	{
+		mesa[livreDireita].status = '1';
+		mesa[livreDireita].ladoD = pecas[jogada].lado2;
+		mesa[livreDireita].ladoE = pecas[jogada].lado1;
+		pecas[jogada].status = 'M';
+	}
+	else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado2 && erro == 0)
+	{
+		mesa[livreDireita].status = '1';
+		mesa[livreDireita].ladoD = pecas[jogada].lado1;
+		mesa[livreDireita].ladoE = pecas[jogada].lado2;
+		pecas[jogada].status = 'M';
+	}
+	else{
+		printf("Peca invalida\n");
+		erro = 1;
+	}
+	if(erro == 0){
+	if(JOGADOR_ATUAL == '1')
+		JOGADOR_ATUAL = '2';
+	else
+		JOGADOR_ATUAL = '1';
+	}
 }
 
 /*
@@ -244,5 +174,21 @@ int proximaJogada(){
     return i;
 }
 
+void comprarPecas(char jogador)
+  {
+  int i=14;
+  while(i<28)
+    {
+    if(pecas[i].status=='N')
+      {
+      pecas[i].status=jogador;
+      break;
+	  }
+	i++;
+	}
+  if(i>=28)
+    printf("Nada a comprar");
+  }
 
+ /// 12, 14, 15
 

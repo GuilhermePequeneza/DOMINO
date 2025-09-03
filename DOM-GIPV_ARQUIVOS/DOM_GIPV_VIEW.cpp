@@ -33,6 +33,7 @@ char menuGeral(){
 		printf("1 - Comecar Jogo\n");
 		printf("0 - SAIR\n");
 		op = getchar();
+		fclear();
 		if(op <= '0' || op >= '1'){
 			return op;
 		}
@@ -42,20 +43,27 @@ char menuGeral(){
 
 char menuJogador(char jogador){
 	char op;
-	limpaTela();
+	//limpaTela(); 
 	apresentarMesa();
 	printf("----------------------------------------------------------------\n");
-	printf("Vez do jogador %c\n\n",jogador);
-	printf("\n----------------------------------------------------------------\n");
-	
+	printf("Vez do jogador %c\n",JOGADOR_ATUAL);
+	printf("----------------------------------------------------------------\n");
+	apresentarPecasJogador(JOGADOR_ATUAL);
 	do{
-		printf("0 - Jogar\n");
-		printf("1 - Comprar\n");
-		printf("2 - Passar\n");
+		printf("0 - Acabar\n");
+		printf("1 - Jogar\n");
+		printf("2 - Comprar\n");
+		printf("3 - Passar\n");
 		op = getchar();
-		if(op <= '0' || op >= '1' || op == '2'){
+		fclear();
+		if(op >= '0' || op <= '3')
+		{
 			return op;
 		} 
+		else
+			printf("Escolha invalida");
+		
+		limpaTela(); 
 	}while(1);
 }
 
@@ -67,15 +75,16 @@ void apresentarMesa(){
 		for(int i = 0; mesa[i].status != '0'; i++){
 			printf("%d|%d ",mesa[i].ladoE, mesa[i].ladoD);
 		}
+		printf("\n");
 	}
 }
 
 void apresentarPecasJogador(char jogador){ 
 	// ---:> DEPOIS Apresentar pessas de um jogador especifico
 	printf("----------------------------------------------------------------\n");
-	printf("Pecas do jogador %c\n\n",jogador);
+	printf("Pecas do jogador %c\n\n",JOGADOR_ATUAL);
 	for(int i = 0; i < 28; i++){
-		if(pecas[i].status == jogador){
+		if(pecas[i].status == JOGADOR_ATUAL){
 			printf("%d. %d|%d  ", i, pecas[i].lado1, pecas[i].lado2);
 		}
 	}
