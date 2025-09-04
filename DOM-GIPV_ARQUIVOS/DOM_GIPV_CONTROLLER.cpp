@@ -106,6 +106,8 @@ void prepararJogo(){
 void jogadaJogador(char jogador){
 	system("pause");
 	
+	
+	char lado;
 	limpaTela();
 	apresentarMesa();
  	int jogada = 0;
@@ -124,6 +126,42 @@ void jogadaJogador(char jogador){
 		}
 		else{
 			jogadaSimples(jogada, livreDireita);
+		else if(mesa[0].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
+		{														//lado esquerdo da mesa em comparaï¿½ï¿½o com o lado esquerdo da peca
+			mesa[livreDireita].status = '1';
+			for (int i = livreDireita; i > 0; i--) {
+				mesa[i].ladoD = mesa[i - 1].ladoD;
+				mesa[i].ladoE = mesa[i - 1].ladoE;
+			}
+			mesa[0].ladoD = pecas[jogada].lado2;
+			mesa[0].ladoE = pecas[jogada].lado1;
+			pecas[jogada].status = 'M';
+		}
+		else if(mesa[0].ladoE == pecas[jogada].lado1) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
+		{														  //lado esquerdo da mesa em comparaï¿½ï¿½o com o lado direito da peca
+			mesa[livreDireita].status = '1';
+			for (int i = livreDireita; i > 0; i--) {
+				mesa[i].ladoD = mesa[i - 1].ladoD;
+				mesa[i].ladoE = mesa[i - 1].ladoE;
+			}
+			mesa[0].ladoE = pecas[jogada].lado2;
+			mesa[0].ladoD = pecas[jogada].lado1;
+			pecas[jogada].status = 'M';
+	
+		}
+		else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado1)//lado direito da mesa em comparaï¿½ï¿½o com o lado direito da peca
+		{
+			mesa[livreDireita].status = '1';
+			mesa[livreDireita].ladoD = pecas[jogada].lado2;
+			mesa[livreDireita].ladoE = pecas[jogada].lado1;
+			pecas[jogada].status = 'M';
+		}
+		else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado2)//lado direito da mesa em comparaï¿½ï¿½o com o lado esquerdo da peca
+		{
+			mesa[livreDireita].status = '1';
+			mesa[livreDireita].ladoD = pecas[jogada].lado1;
+			mesa[livreDireita].ladoE = pecas[jogada].lado2;
+			pecas[jogada].status = 'M';
 		}
 	}
 	else{
@@ -180,6 +218,7 @@ int finalizarJogo(){
 	for(int i = 0; i < 28; i++){
 		if(pecas[i].status == '1'){
 			count1++;
+
 		}
 			if(pecas[i].status == '2'){
 			count2++;
@@ -262,7 +301,7 @@ void jogadaDupla(int pecca, int livree){
 
 void jogadaSimples(int pecca, int livee){
 	if(mesa[0].ladoE == pecas[pecca].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
-		{														//lado esquerdo da mesa em comparação com o lado esquerdo da peca
+		{														//lado esquerdo da mesa em comparaï¿½ï¿½o com o lado esquerdo da peca
 			mesa[livee].status = '1';
 			for (int i = livee; i > 0; i--) {
 				mesa[i].ladoD = mesa[i - 1].ladoD;
@@ -273,7 +312,7 @@ void jogadaSimples(int pecca, int livee){
 			pecas[pecca].status = 'M';
 		}
 		else if(mesa[0].ladoE == pecas[pecca].lado1) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
-		{														  //lado esquerdo da mesa em comparação com o lado direito da peca
+		{														  //lado esquerdo da mesa em comparaï¿½ï¿½o com o lado direito da peca
 			mesa[livee].status = '1';
 			for (int i = livee; i > 0; i--) {
 				mesa[i].ladoD = mesa[i - 1].ladoD;
@@ -284,20 +323,58 @@ void jogadaSimples(int pecca, int livee){
 			pecas[pecca].status = 'M';
 	
 		}
-		else if(mesa[livee-1].ladoD == pecas[pecca].lado1)//lado direito da mesa em comparação com o lado direito da peca
+		else if(mesa[livee-1].ladoD == pecas[pecca].lado1)//lado direito da mesa em comparaï¿½ï¿½o com o lado direito da peca
 		{
 			mesa[livee].status = '1';
 			mesa[livee].ladoD = pecas[pecca].lado2;
 			mesa[livee].ladoE = pecas[pecca].lado1;
 			pecas[pecca].status = 'M';
 		}
-		else if(mesa[livee-1].ladoD == pecas[pecca].lado2)//lado direito da mesa em comparação com o lado esquerdo da peca
+		else if(mesa[livee-1].ladoD == pecas[pecca].lado2)//lado direito da mesa em comparaï¿½ï¿½o com o lado esquerdo da peca
 		{
 			mesa[livee].status = '1';
 			mesa[livee].ladoD = pecas[pecca].lado1;
 			mesa[livee].ladoE = pecas[pecca].lado2;
 			pecas[pecca].status = 'M';
 		}
+int JogoTrancado(){ //Caso onde o jogo tranca
+	int count1=0;
+	int count2=0;
+	int soma1=0;
+	int soma2=0;
+	
+
+	if(COUNT_VEZ>1){ //Condicao que antecede a "finalizarJogo()" para ver se o jogo trancou
+
+		for(int i = 0; i < 28; i++){ //verifica a quantidade de pecas na mao de cada jogador em - count1 e 2
+			if(pecas[i].status == '1'){
+				count1++;
+				soma1 = pecas[i].lado1 + pecas[i].lado2 
+
+			}
+				if(pecas[i].status == '2'){
+				count2++;
+				soma2 = pecas[i].lado1 + pecas[i].lado2 
+			}
+			if(count1 > 0 && count2 > 0){
+				break;
+			}
+		}
+	
+		if (soma1 > soma2){ //mensagem de saÃ­da
+			printf("Jogador 1 venceu com %d total de pontos\n",soma1);
+			printf("Jogador 2 perdeu com %d total de pontos\n",soma2);
+
+		
+		if(soma2 > soma1) {
+		printf("Jogador 2 venceu com %d total de pontos\n",soma2);
+		printf("Jogador 1 perdeu com %d total de pontos\n",soma1);
+		}
+		else 
+		printf("Os jogadores empataram na quantidade de pontos: j1 %d = j2 %d",soma1,soma2);
+
+		}
+	}
 }
 
 

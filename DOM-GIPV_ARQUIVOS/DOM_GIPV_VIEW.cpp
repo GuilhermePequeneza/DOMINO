@@ -58,6 +58,10 @@ char menuJogador(char jogador){
 		printf("3 - Passar\n");
 		printf("Escolha uma opcao: ");
 		op = getchar();
+		
+		if(op == 3) { COUNT_VEZ++; } //pensei em colocar uma condição para toda vez que op for 3, ele adicionar +1 na variavel global
+		// nao esquecer da viarvel global para poder ver toda vez que ele passar mais de uma vez
+		
 		fclear();
 		if(op >= '0' || op <= '3')
 		{
