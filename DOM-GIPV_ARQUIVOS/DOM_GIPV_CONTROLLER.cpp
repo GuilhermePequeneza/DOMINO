@@ -13,23 +13,21 @@ void jogar(){
 				embaralharPecas();
 				prepararJogo();
 				do{
-					op = menuJogador(JOGADOR_ATUAL);
+					op = menuJogador();
 					switch(op)
 					{
 						case '1':
-							jogadaJogador(JOGADOR_ATUAL);
-							
+							jogadaJogador();
 							//printf("return: %d ",finalizarJogo() );
-							
 							break;
 						case '2':
-							comprarPecas(JOGADOR_ATUAL);
+							comprarPecas();
 							break;
 						case '3':
-							if(JOGADOR_ATUAL == '1')
-								JOGADOR_ATUAL = '2';
+							if(sitjogo.jogadorJogo == '1')
+								sitjogo.jogadorJogo = '2';
 							else
-								JOGADOR_ATUAL = '1';
+								sitjogo.jogadorJogo = '1';
 								limpaTela();
 							break;
 					}
@@ -42,7 +40,7 @@ void jogar(){
 	}while(0);
 }
 
-char primeiraJogada() {
+void primeiraJogada() {
     int pecaMaior = 0;
     mesa[0].status = '1';
     for(int i = 1; i < 14; i++) {
@@ -70,18 +68,18 @@ char primeiraJogada() {
             }
         }
     }
+    
+	mesa[0].ladoE = pecas[pecaMaior].lado1;
+        sitjogo.mesaEJogo = pecas[pecaMaior].lado1;
+        mesa[0].ladoD = pecas[pecaMaior].lado2;
+        sitjogo.mesaEJogo = pecas[pecaMaior].lado2;
+        pecas[pecaMaior].status = 'M';
 
     // Agora decide qual jogador tem a peca maior
     if(pecaMaior < 7) {
-        mesa[0].ladoE = pecas[pecaMaior].lado1;
-        mesa[0].ladoD = pecas[pecaMaior].lado2;
-        pecas[pecaMaior].status = 'M';
-        return '1'; // Jogador 1
+        JOGADOR_ATUAL = 1;
     } else {
-        mesa[0].ladoE = pecas[pecaMaior].lado1;
-        mesa[0].ladoD = pecas[pecaMaior].lado2;
-        pecas[pecaMaior].status = 'M';
-        return '2'; // Jogador 2
+        JOGADOR_ATUAL = 2;
     }
     
 }
@@ -95,15 +93,14 @@ void prepararJogo(){
 		pecas[i + 7].status = '2';
 		
 	}
-	JOGADOR_ATUAL = primeiraJogada();
 	printf("Jogador %c comecou\n\n", JOGADOR_ATUAL);
-	if(JOGADOR_ATUAL == '1')
-		JOGADOR_ATUAL = '2';
+	if(sitjogo.jogadorJogoL == '1')
+		sitjogo.jogadorJogo = '2';
 	else{
-		JOGADOR_ATUAL = '1';}
+		sitjogo.jogadorJogo = '1';}
 }
 
-void jogadaJogador(char jogador){
+void jogadaJogador(){
 	system("pause");
 	
 	
@@ -115,10 +112,10 @@ void jogadaJogador(char jogador){
 	int livreDireita; // primeiro espaco livre na direita
 	livreDireita = proximaJogada();
 	printf("Qual peca voce quer jogar?\n");
-	apresentarPecasJogador(jogador);
+	apresentarPecasJogador(sitjogo.jogadorJogo);
 	scanf("%d", &jogada);
 	fclear();
-	if(pecas[jogada].status != JOGADOR_ATUAL)
+	if(pecas[jogada].status != sitjogo.jogadorJogo)
 		erro = 1;
 	if(erro == 0){
 		if(comparaLados(jogada, livreDireita) == 1){
@@ -169,10 +166,10 @@ void jogadaJogador(char jogador){
 		system("pause");
 	}
 	if(erro == 0){
-	if(JOGADOR_ATUAL == '1')
-		JOGADOR_ATUAL = '2';
+	if(sitjogo.jogadorJogo == '1')
+		sitjogo.jogadorJogo = '2';
 	else
-		JOGADOR_ATUAL = '1';
+		sitjogo.jogadorJogo = '1';
 	}
 	limpaTela();
 }
@@ -192,14 +189,14 @@ int proximaJogada(){
     return i;
 }
 
-void comprarPecas(char jogador)
+void comprarPecas()
   {
   int i=14;
   while(i<28)
     {
     if(pecas[i].status=='N')
       {
-      pecas[i].status=jogador;
+      pecas[i].status=sitjogo.jogadorJogo;
       break;
 	  }
 	i++;

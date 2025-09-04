@@ -16,6 +16,16 @@ struct mesa{
 	char status = '0'; // '0', '1'
 }mesa[28]; // PREENCHER POR FAVOR
 
+struct Jogo
+{
+	int qtmesaJogo; //qtd de pessas na mesa
+	char jogadorJogo; //jogador atual
+	int jogadorComp; ; // 2 = o computador sendo o jogador 2 
+	int mesaDJogo; // extremidade direita da mesa
+	int mesaEJogo; // extremidade esquerda da mesa
+}sitjogo;
+
+
 void gerarpecas();
 void embaralharPecas();
 

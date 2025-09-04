@@ -42,14 +42,14 @@ char menuGeral(){
 	
 }
 
-char menuJogador(char jogador){
+char menuJogador(){
 	char op;
 	//limpaTela(); 
 	apresentarMesa();
 	printf("----------------------------------------------------------------\n");
-	printf("Vez do jogador %c\n",JOGADOR_ATUAL);
+	printf("Vez do jogador %c\n",sitjogo.jogadorJogo);
 	printf("----------------------------------------------------------------\n");
-	apresentarPecasJogador(JOGADOR_ATUAL);
+	apresentarPecasJogador(sitjogo.jogadorJogo);
 	do{
 		
 		printf("0 - Acabar\n");
@@ -84,12 +84,12 @@ void apresentarMesa(){
 	
 }
 
-void apresentarPecasJogador(char jogador){ 
+void apresentarPecasJogador(){ 
 	// ---:> DEPOIS Apresentar pessas de um jogador especifico
 	printf("----------------------------------------------------------------\n");
-	printf("Pecas do jogador %c\n\n",JOGADOR_ATUAL);
+	printf("Pecas do jogador %c\n\n",sitjogo.jogadorJogo);
 	for(int i = 0; i < 28; i++){
-		if(pecas[i].status == JOGADOR_ATUAL){
+		if(pecas[i].status == sitjogo.jogadorJogo){
 			printf("%d.[%d|%d]  ", i, pecas[i].lado1, pecas[i].lado2);
 		}
 	}

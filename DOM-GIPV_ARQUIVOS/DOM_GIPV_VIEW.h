@@ -7,11 +7,11 @@ void exibirPecas();
 
 void fclear();
 
-char menuJogador(char jogador);
+char menuJogador();
 
 void apresentarMesa();
 
-void apresentarPecasJogador(char jogador);
+void apresentarPecasJogador();
 
 int quantosJogadores();
 

@@ -1,10 +1,10 @@
 void jogar();
 void prepararJogo();
-char primeiraJogada();
-void jogadaJogador(char jogador);
+void primeiraJogada();
+void jogadaJogador();
 //void jogadaComputador();
 int proximaJogada();
-void comprarPecas(char jogador);
+void comprarPecas();
 int finalizarJogo();
 int comparaLados(int peka, int livre);
 void jogadaDupla(int pecca, int livree);
