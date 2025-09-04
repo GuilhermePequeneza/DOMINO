@@ -6,6 +6,7 @@ void jogadaJogador(char jogador);
 int proximaJogada();
 void comprarPecas(char jogador);
 int finalizarJogo();
+int comparaLados(int peka, int livre);
 
 
 

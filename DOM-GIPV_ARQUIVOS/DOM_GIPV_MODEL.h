@@ -3,8 +3,8 @@ int maoJogador[2][21];
 char JOGADOR_ATUAL; //JOGADOR_ATUAL
 
 struct peca {
-	int lado1;
-	int lado2;
+	int lado1;//lado direito
+	int lado2;//lado esquerdo
 	char status = 'N'; //NULL,'1','2','M'
 } pecas[28];
 

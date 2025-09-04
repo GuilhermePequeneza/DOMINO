@@ -105,6 +105,7 @@ void prepararJogo(){
 
 void jogadaJogador(char jogador){
 	system("pause");
+	char lado;
 	limpaTela();
 	apresentarMesa();
  	int jogada = 0;
@@ -117,47 +118,96 @@ void jogadaJogador(char jogador){
 	fclear();
 	if(pecas[jogada].status != JOGADOR_ATUAL)
 		erro = 1;
-	if(mesa[0].ladoE == pecas[jogada].lado2 && erro == 0) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
-	{
-		mesa[livreDireita].status = '1';
-		for (int i = livreDireita; i > 0; i--) {
-			mesa[i].ladoD = mesa[i - 1].ladoD;
-			mesa[i].ladoE = mesa[i - 1].ladoE;
+	if(erro == 0){
+		if(comparaLados(jogada, livreDireita) == 1){
+			do{
+			
+				printf("Qual lado deseja jogar(E/D)?\n");
+				lado = getchar();
+				fclear();
+				if(lado != 'E' && lado != 'e' && lado != 'D' && lado != 'd'){
+					printf("Caracter invalido. Tente novamente");
+					system("pause");
+					limpaTela();
+				}
+				if(lado == 'E' || lado == 'e'){
+					mesa[livreDireita].status = '1';
+					
+					for(int i = livreDireita; i > 0; i--) {
+						mesa[i].ladoD = mesa[i - 1].ladoD;
+						mesa[i].ladoE = mesa[i - 1].ladoE;
+						}
+					if(mesa[0].ladoE == pecas[jogada].lado1){
+						mesa[0].ladoD = pecas[jogada].lado1;
+						mesa[0].ladoE = pecas[jogada].lado2;	
+					
+					}
+					else{
+						mesa[0].ladoD = pecas[jogada].lado2;
+						mesa[0].ladoE = pecas[jogada].lado1;
+							
+					}
+					pecas[jogada].status = 'M';
+				}
+				if(lado == 'D' || lado == 'd'){
+					mesa[livreDireita].status = '1';
+					if(mesa[livreDireita - 1].ladoD == pecas[jogada].lado1){
+						mesa[livreDireita].ladoE = pecas[jogada].lado1;
+						mesa[livreDireita].ladoD = pecas[jogada].lado2;
+							
+					}
+					else{
+						mesa[livreDireita].ladoD = pecas[jogada].lado1;
+						mesa[livreDireita].ladoE = pecas[jogada].lado2;	
+							
+					}
+					pecas[jogada].status = 'M';
+				}
+				
+			}while(lado != 'E' && lado != 'e' && lado != 'D' && lado != 'd');
 		}
-		mesa[0].ladoD = pecas[jogada].lado2;
-		mesa[0].ladoE = pecas[jogada].lado1;
-		pecas[jogada].status = 'M';
-	}
-	else if(mesa[0].ladoE == pecas[jogada].lado1 && erro == 0) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
-	{
-		mesa[livreDireita].status = '1';
-		for (int i = livreDireita; i > 0; i--) {
-			mesa[i].ladoD = mesa[i - 1].ladoD;
-			mesa[i].ladoE = mesa[i - 1].ladoE;
+		else if(mesa[0].ladoE == pecas[jogada].lado2) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
+		{														//lado esquerdo da mesa em comparação com o lado esquerdo da peca
+			mesa[livreDireita].status = '1';
+			for (int i = livreDireita; i > 0; i--) {
+				mesa[i].ladoD = mesa[i - 1].ladoD;
+				mesa[i].ladoE = mesa[i - 1].ladoE;
+			}
+			mesa[0].ladoD = pecas[jogada].lado2;
+			mesa[0].ladoE = pecas[jogada].lado1;
+			pecas[jogada].status = 'M';
 		}
-		mesa[0].ladoE = pecas[jogada].lado2;
-		mesa[0].ladoD = pecas[jogada].lado1;
-		pecas[jogada].status = 'M';
-
-	}
-	else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado1 && erro == 0)
-	{
-		mesa[livreDireita].status = '1';
-		mesa[livreDireita].ladoD = pecas[jogada].lado2;
-		mesa[livreDireita].ladoE = pecas[jogada].lado1;
-		pecas[jogada].status = 'M';
-	}
-	else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado2 && erro == 0)
-	{
-		mesa[livreDireita].status = '1';
-		mesa[livreDireita].ladoD = pecas[jogada].lado1;
-		mesa[livreDireita].ladoE = pecas[jogada].lado2;
-		pecas[jogada].status = 'M';
+		else if(mesa[0].ladoE == pecas[jogada].lado1) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
+		{														  //lado esquerdo da mesa em comparação com o lado direito da peca
+			mesa[livreDireita].status = '1';
+			for (int i = livreDireita; i > 0; i--) {
+				mesa[i].ladoD = mesa[i - 1].ladoD;
+				mesa[i].ladoE = mesa[i - 1].ladoE;
+			}
+			mesa[0].ladoE = pecas[jogada].lado2;
+			mesa[0].ladoD = pecas[jogada].lado1;
+			pecas[jogada].status = 'M';
+	
+		}
+		else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado1)//lado direito da mesa em comparação com o lado direito da peca
+		{
+			mesa[livreDireita].status = '1';
+			mesa[livreDireita].ladoD = pecas[jogada].lado2;
+			mesa[livreDireita].ladoE = pecas[jogada].lado1;
+			pecas[jogada].status = 'M';
+		}
+		else if(mesa[livreDireita-1].ladoD == pecas[jogada].lado2)//lado direito da mesa em comparação com o lado esquerdo da peca
+		{
+			mesa[livreDireita].status = '1';
+			mesa[livreDireita].ladoD = pecas[jogada].lado1;
+			mesa[livreDireita].ladoE = pecas[jogada].lado2;
+			pecas[jogada].status = 'M';
+		}
 	}
 	else{
-		printf("Peca invalida\n");
+		printf("Peca invalida.Tente novamente\n");
 		system("pause");
-		erro = 1; }
+	}
 	if(erro == 0){
 	if(JOGADOR_ATUAL == '1')
 		JOGADOR_ATUAL = '2';
@@ -227,6 +277,13 @@ int finalizarJogo(){
 	}
 	else{
 		return 0;
+	}
+}
+
+int comparaLados(int peka, int livre){ //Ve se a jogada pode ser feita em ambas as extremidades da mesa
+										// recebe o id da peca jogada e o o indice da mesa 
+	if((mesa[0].ladoE == pecas[peka].lado1 || mesa[0].ladoE == pecas[peka].lado2) && (mesa[livre - 1].ladoD == pecas[peka].lado1 || mesa[livre - 1].ladoD == pecas[peka].lado2)){
+		return 1;
 	}
 }
 
