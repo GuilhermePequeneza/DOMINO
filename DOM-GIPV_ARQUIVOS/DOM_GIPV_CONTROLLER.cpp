@@ -72,15 +72,15 @@ void primeiraJogada() {
 	mesa[0].ladoE = pecas[pecaMaior].lado1;
     sitjogo.mesaEJogo = pecas[pecaMaior].lado1;
     mesa[0].ladoD = pecas[pecaMaior].lado2;
-    sitjogo.mesaEJogo = pecas[pecaMaior].lado2;
+    sitjogo.mesaDJogo = pecas[pecaMaior].lado2;
     pecas[pecaMaior].status = 'M';
     sitjogo.qtmesaJogo = 1;
 
     // Agora decide qual jogador tem a peca maior
     if(pecaMaior < 7) {
-        JOGADOR_ATUAL = 1;
+        sitjogo.jogadorJogo = '1';
     } else {
-        JOGADOR_ATUAL = 2;
+        sitjogo.jogadorJogo = '2';
     }
     
 }
@@ -94,28 +94,36 @@ void prepararJogo(){
 		pecas[i + 7].status = '2';
 		
 	}
+	primeiraJogada();
 	printf("Jogador %c comecou\n\n", sitjogo.jogadorJogo);
-	if(sitjogo.jogadorJogo == '1')
-		sitjogo.jogadorJogo = '2';
-	else{
-		sitjogo.jogadorJogo = '1';}
+	sitjogo.jogadorJogo = (sitjogo.jogadorJogo == '2') ? '1' : '2';
+	
+	//if(sitjogo.jogadorJogo == '1')
+	//	sitjogo.jogadorJogo = '2';
+	//else{
+	//	sitjogo.jogadorJogo = '1';
+	//}
 }
 
 void jogadaJogador(){
 	system("pause");
 	
-	
-	char lado;
-	limpaTela();
-	apresentarMesa();
- 	int jogada = 0;
+	int jogada = 0;
 	int erro = 0; //se o erro for 1 ele repete o jogador para refazer a jogada, se for 0 passqa a vez para o proximo 
 	int livreDireita; // primeiro espaco livre na direita
-	livreDireita = proximaJogada();
+	char lado;
+	
+	limpaTela();
+	apresentarMesa();
+ 	livreDireita = proximaJogada();
+ 	
 	printf("Qual peca voce quer jogar?\n");
+	
 	apresentarPecasJogador(sitjogo.jogadorJogo);
 	scanf("%d", &jogada);
+	
 	fclear();
+	
 	if(pecas[jogada].status != sitjogo.jogadorJogo)
 		erro = 1;
 	if(erro == 0){
@@ -209,6 +217,9 @@ int comparaLados(int peka, int livre){ //Ve se a jogada pode ser feita em ambas 
 	if((mesa[0].ladoE == pecas[peka].lado1 || mesa[0].ladoE == pecas[peka].lado2) && (mesa[livre - 1].ladoD == pecas[peka].lado1 || mesa[livre - 1].ladoD == pecas[peka].lado2)){
 		return 1;
 	}
+	else{
+		return 0;
+	}
 }
 
 void jogadaDupla(int pecca, int livree){
@@ -241,7 +252,7 @@ void jogadaDupla(int pecca, int livree){
 				mesa[0].ladoE = pecas[pecca].lado1;
 					
 			}
-			pecas[livree].status = 'M';
+			pecas[pecca].status = 'M';
 		}
 		if(lado == 'D' || lado == 'd'){
 			mesa[livree].status = '1';
@@ -315,29 +326,29 @@ int JogoTrancado(){ //Caso onde o jogo tranca
 		for(int i = 0; i < 28; i++){ //verifica a quantidade de pecas na mao de cada jogador em - count1 e 2
 			if(pecas[i].status == '1'){
 				count1++;
-				soma1 = pecas[i].lado1 + pecas[i].lado2; 
+				soma1 += pecas[i].lado1 + pecas[i].lado2; 
 
 			}
 				if(pecas[i].status == '2'){
 				count2++;
-				soma2 = pecas[i].lado1 + pecas[i].lado2; 
+				soma2 += pecas[i].lado1 + pecas[i].lado2; 
 			}
 			if(count1 > 0 && count2 > 0){
 				break;
 			}
 		}
 	
-		if (soma1 > soma2){ //mensagem de saÃ­da
+		if (soma1 > soma2){ //mensagem de saída
 			printf("Jogador 1 venceu com %d total de pontos\n",soma1);
 			printf("Jogador 2 perdeu com %d total de pontos\n",soma2);
 
 		
 		if(soma2 > soma1) {
-		printf("Jogador 2 venceu com %d total de pontos\n",soma2);
-		printf("Jogador 1 perdeu com %d total de pontos\n",soma1);
+			printf("Jogador 2 venceu com %d total de pontos\n",soma2);
+			printf("Jogador 1 perdeu com %d total de pontos\n",soma1);
 		}
 		else 
-		printf("Os jogadores empataram na quantidade de pontos: j1 %d = j2 %d",soma1,soma2);
+			printf("Os jogadores empataram na quantidade de pontos: j1 %d = j2 %d",soma1,soma2);
 
 		}
 	}
