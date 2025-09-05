@@ -20,7 +20,7 @@ struct Jogo
 {
 	int qtmesaJogo; //qtd de pessas na mesa
 	char jogadorJogo; //jogador atual
-	int jogadorComp; ; // 2 = o computador sendo o jogador 2 
+	int jogadorComp;// 2 = o computador sendo o jogador 2 
 	int mesaDJogo; // extremidade direita da mesa
 	int mesaEJogo; // extremidade esquerda da mesa
 }sitjogo;

@@ -47,7 +47,7 @@ char menuJogador(){
 	//limpaTela(); 
 	apresentarMesa();
 	printf("----------------------------------------------------------------\n");
-	printf("Vez do jogador %c\n",sitjogo.jogadorJogo);
+	printf("Vez do jogador %c\n", sitjogo.jogadorJogo);
 	printf("----------------------------------------------------------------\n");
 	apresentarPecasJogador(sitjogo.jogadorJogo);
 	do{
@@ -84,7 +84,7 @@ void apresentarMesa(){
 	
 }
 
-void apresentarPecasJogador(){ 
+void apresentarPecasJogador(char jogador){ 
 	// ---:> DEPOIS Apresentar pessas de um jogador especifico
 	printf("----------------------------------------------------------------\n");
 	printf("Pecas do jogador %c\n\n",sitjogo.jogadorJogo);
