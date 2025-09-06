@@ -1,7 +1,9 @@
 #include "DOM_GIPV_MODEL.h"
 #include<time.h>
 #include<stdlib.h>
-
+#include<ctype.h>
+#include<string.h>
+#include<locale.h>
 
 void gerarPecas() {
 	//---:>GERA AS PECAS QUE SAO USADAS PARA EMBARALHAR E TAMBEM AS DE EXIBICAO

@@ -30,6 +30,9 @@ void jogar(){
 								sitjogo.jogadorJogo = '1';
 								limpaTela();
 							break;
+						case '4':
+							mostrarRegras();
+							break;
 					}
 				}while(op != '0' && finalizarJogo() == 0);
 				break;
@@ -95,7 +98,15 @@ void prepararJogo(){
 		
 	}
 	primeiraJogada();
-	printf("Jogador %c comecou\n\n", sitjogo.jogadorJogo);
+	printf("+----------------------------+\n");
+	if(sitjogo.jogadorJogo == '1'){
+		printf("%s começou\n", nome1);
+	}
+	else{
+		printf("%s começou\n", nome2);
+	}
+	
+	printf("+----------------------------+\n");
 	sitjogo.jogadorJogo = (sitjogo.jogadorJogo == '2') ? '1' : '2';
 	
 	//if(sitjogo.jogadorJogo == '1')
@@ -106,39 +117,68 @@ void prepararJogo(){
 }
 
 void jogadaJogador(){
-	system("pause");
 	
 	int jogada = 0;
-	int erro = 0; //se o erro for 1 ele repete o jogador para refazer a jogada, se for 0 passqa a vez para o proximo 
+	int erro = 1; //se o erro for 1 ele repete o jogador para refazer a jogada, se for 0 passqa a vez para o proximo 
+	char tentarDenovo = 'S';
 	int livreDireita; // primeiro espaco livre na direita
 	char lado;
 	
-	limpaTela();
-	apresentarMesa();
+	//limpaTela();
+	//apresentarMesa();
  	livreDireita = proximaJogada();
  	
-	printf("Qual peca voce quer jogar?\n");
-	
-	apresentarPecasJogador(sitjogo.jogadorJogo);
-	scanf("%d", &jogada);
-	
-	fclear();
-	
-	if(pecas[jogada].status != sitjogo.jogadorJogo)
-		erro = 1;
-	if(erro == 0){
-		if(comparaLados(jogada, livreDireita) == 1){
-			jogadaDupla(jogada, livreDireita);
+ 	do{
+ 		limpaTela();
+ 		apresentarMesa();
+		printf("Qual peça voce quer jogar?\n");
+		apresentarPecasJogador(sitjogo.jogadorJogo);
+		
+		char escolha;
+		scanf(" %c", &escolha);
+		//fclear();
+		
+		// converte letra para índice
+		int indiceLetra = tolower(escolha) - 'a';
+		
+		//encontrar a peça correspondente
+		int contador = 0;
+		jogada = -1;
+		for(int i = 0; i < 28; i++){
+		    if(pecas[i].status == sitjogo.jogadorJogo){
+		        if(contador == indiceLetra){
+		            jogada = i; // indice real da peça no vetor `pecas`
+		            break;
+		        }
+		        contador++;
+		    }
 		}
-		else{
-			jogadaSimples(jogada, livreDireita);
+	
+		if(jogada == -1){
+		    erro = 1;
 		}
-		sitjogo.qtmesaJogo++;
-	}
-	else{
-		printf("Peca invalida.Tente novamente\n");
-		system("pause");
-	}
+		
+		fclear();
+		
+		if((pecas[jogada].status != sitjogo.jogadorJogo) || ((pecas[jogada].lado1 != mesa[0].ladoE && pecas[jogada].lado2 != mesa[0].ladoE) && (pecas[jogada].lado1 != mesa[livreDireita].ladoD && pecas[jogada].lado2 != mesa[livreDireita].ladoD))){
+			//Ve se a peca ta na mão dele e se estiver se pode ser colocada em uma das extremidades da mesa(ta grande eu sei, não gostou faz melhor :) )
+			printf("Peça inválida. Gostaria de jogar outra peça?(S/N)\n");
+			tentarDenovo = getchar();
+		
+		} 
+		else
+			erro = 0;		
+		if(erro == 0){
+			if(comparaLados(jogada, livreDireita) == 1){
+				jogadaDupla(jogada, livreDireita);
+			}
+			else{
+				jogadaSimples(jogada, livreDireita);
+			}
+			sitjogo.qtmesaJogo++;
+		}
+	}while(erro == 1 && (tentarDenovo == 'S' || tentarDenovo == 's'));//Repete a escolha da peca enquanto digitar SIM(s ou S)
+	
 	if(erro == 0){
 	if(sitjogo.jogadorJogo == '1')
 		sitjogo.jogadorJogo = '2';
@@ -199,12 +239,12 @@ int finalizarJogo(){
 		}
 	}
 	if(count1 == 0){
-		printf("Jogador 1 Venceu :() xd");
+		printf("%s Venceu :() xd", nome1);
 		return 1;
 		
 	}
 	if(count2 == 0){
-		printf("Jogador 2 Venceu :() xd");
+		printf("%s Venceu :() xd", nome2);
 		return 2;
 	}
 	else{
@@ -231,7 +271,7 @@ void jogadaDupla(int pecca, int livree){
 		lado = getchar();
 		fclear();
 		if(lado != 'E' && lado != 'e' && lado != 'D' && lado != 'd'){
-			printf("Caracter invalido. Tente novamente");
+			printf("Carácter inválido. Tente novamente");
 			system("pause");
 			limpaTela();
 		}
@@ -339,13 +379,11 @@ int JogoTrancado(){ //Caso onde o jogo tranca
 		}
 	
 		if (soma1 > soma2){ //mensagem de saída
-			printf("Jogador 1 venceu com %d total de pontos\n",soma1);
-			printf("Jogador 2 perdeu com %d total de pontos\n",soma2);
-
-		
-		if(soma2 > soma1) {
-			printf("Jogador 2 venceu com %d total de pontos\n",soma2);
-			printf("Jogador 1 perdeu com %d total de pontos\n",soma1);
+			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
+			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
+		if(soma2 > soma1){
+			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
+			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
 		}
 		else 
 			printf("Os jogadores empataram na quantidade de pontos: j1 %d = j2 %d",soma1,soma2);

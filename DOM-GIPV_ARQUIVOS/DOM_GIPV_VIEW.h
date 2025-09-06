@@ -1,5 +1,5 @@
 #include<stdio.h>
-
+#include<locale.h>
 
 char menuGeral();
 
@@ -16,3 +16,8 @@ void apresentarPecasJogador(char jogador);
 int quantosJogadores();
 
 void limpaTela();
+
+void mostrarRegras();
+
+void boasVindas(); // a fazer
+

@@ -10,7 +10,9 @@
 
 
 main()
-{
+{	
+	setlocale(LC_ALL,"");
+	mostrarRegras();
 	quantosJogadores(); //VIEW
 	//system("pause");
 	gerarPecas(); //--:> MODEL
