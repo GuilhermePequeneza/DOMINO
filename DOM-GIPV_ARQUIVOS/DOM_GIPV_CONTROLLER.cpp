@@ -160,7 +160,7 @@ void jogadaJogador(){
 		
 		fclear();
 		
-		if((pecas[jogada].status != sitjogo.jogadorJogo) || ((pecas[jogada].lado1 != mesa[0].ladoE && pecas[jogada].lado2 != mesa[0].ladoE) && (pecas[jogada].lado1 != mesa[livreDireita].ladoD && pecas[jogada].lado2 != mesa[livreDireita].ladoD))){
+		if((pecas[jogada].status != sitjogo.jogadorJogo) || ((pecas[jogada].lado1 != mesa[0].ladoE && pecas[jogada].lado2 != mesa[0].ladoE) && (pecas[jogada].lado1 != mesa[livreDireita - 1].ladoD && pecas[jogada].lado2 != mesa[livreDireita - 1].ladoD))){
 			//Ve se a peca ta na mão dele e se estiver se pode ser colocada em uma das extremidades da mesa(ta grande eu sei, não gostou faz melhor :) )
 			printf("Peça inválida. Gostaria de jogar outra peça?(S/N)\n");
 			tentarDenovo = getchar();
@@ -176,6 +176,8 @@ void jogadaJogador(){
 				jogadaSimples(jogada, livreDireita);
 			}
 			sitjogo.qtmesaJogo++;
+			sitjogo.mesaDJogo = mesa[livreDireita - 1].ladoD;
+			sitjogo.mesaEJogo = mesa[0].ladoE;
 		}
 	}while(erro == 1 && (tentarDenovo == 'S' || tentarDenovo == 's'));//Repete a escolha da peca enquanto digitar SIM(s ou S)
 	
