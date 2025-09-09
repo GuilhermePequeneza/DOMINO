@@ -39,6 +39,12 @@ void jogar(){
 						case '4':
 							mostrarRegras();
 							break;
+						case '5':
+    						salvarPartida("savegame.dat");
+    						break;
+    					case '6':
+    						carregarPartida("savegame.dat");
+    						break;
 					}
 				}while(op != '0' && finalizarJogo() == 0);
 				break;
@@ -398,6 +404,66 @@ int JogoTrancado(){ //Caso onde o jogo tranca
 
 		}
 	}
+}
+
+void salvarPartida(const char *arquivo) {
+    FILE *fp = fopen(arquivo, "wb");
+    if (!fp) {
+        printf("Erro ao abrir arquivo para salvar!\n");
+        return;
+    }
+
+    // Salva nomes
+    fwrite(nome1, sizeof(nome1), 1, fp);
+    fwrite(nome2, sizeof(nome2), 1, fp);
+
+    // Salva variáveis globais
+    fwrite(&JOGADOR_ATUAL, sizeof(JOGADOR_ATUAL), 1, fp);
+    fwrite(&COUNT_VEZ, sizeof(COUNT_VEZ), 1, fp);
+
+    // Salva peças
+    fwrite(pecas, sizeof(pecas), 1, fp);
+
+    // Salva mesa
+    fwrite(mesa, sizeof(mesa), 1, fp);
+
+    // Salva estado do jogo
+    fwrite(&sitjogo, sizeof(sitjogo), 1, fp);
+
+    fclose(fp);
+    printf("Partida salva em %s!\n", arquivo);
+    system("pause");
+    limpaTela();
+}
+
+void carregarPartida(const char *arquivo) {
+    FILE *fp = fopen(arquivo, "rb");
+    if (!fp) {
+        printf("Nenhum save encontrado!\n");
+        return;
+    }
+
+    // Carrega nomes
+    fread(nome1, sizeof(nome1), 1, fp);
+    fread(nome2, sizeof(nome2), 1, fp);
+
+    // Carrega variáveis globais
+    fread(&JOGADOR_ATUAL, sizeof(JOGADOR_ATUAL), 1, fp);
+    fread(&COUNT_VEZ, sizeof(COUNT_VEZ), 1, fp);
+
+    // Carrega peças
+    fread(pecas, sizeof(pecas), 1, fp);
+
+    // Carrega mesa
+    fread(mesa, sizeof(mesa), 1, fp);
+
+    // Carrega estado do jogo
+    fread(&sitjogo, sizeof(sitjogo), 1, fp);
+
+    fclose(fp);
+    printf("Partida carregada de %s!\n", arquivo);
+    system("pause");
+    limpaTela();
 }
 
 

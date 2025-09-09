@@ -19,6 +19,30 @@ void exibirPecas() {
 	printf("\n");
 }
 
+void querCarregar(){
+    char op;
+    printf("Gostaria de carregar uma partida salva(S/N)?\n");
+
+    do{
+        scanf(" %c", &op); 
+        if ((op != 's' && op != 'S') && (op != 'n' && op != 'N') && op != '0') {
+            printf("Carácter inválido. Tente novamente (0 para sair): ");
+            continue; 
+        }
+
+        if(op == 's' || op == 'S'){
+            carregarPartida("savegame.dat");
+        }
+
+        if(op == '0'){
+            break; 
+        }
+
+    } while(op != 'n' && op != 'N');
+
+    limpaTela();
+}
+
 int quantosJogadores(){
      int quantJog = 0;
      	//Definir quantidade de jogadores
@@ -47,8 +71,8 @@ char menuGeral(){
 	
 	do {
 		limpaTela();
-		printf("1 - Começar Jogo\n");
 		printf("0 - SAIR\n");
+		printf("1 - Começar Jogo\n");
 		printf("Escolha uma opção: ");
 		op = getchar();
 		fclear();
@@ -81,6 +105,9 @@ char menuJogador(){
 		printf("2 - Comprar\n");
 		printf("3 - Passar\n");
 		printf("4 - Regras do jogo\n");
+		printf("5 - Salvar jogo\n");
+		printf("6 - Carregar partida\n");
+		//printf("6 - Carregar jogo\n");	
 		printf("Escolha uma opção: ");
 		op = getchar();
 		if(op == 3) { COUNT_VEZ++; } //pensei em colocar uma condiÃ§Ã£o para toda vez que op for 3, ele adicionar +1 na variavel global

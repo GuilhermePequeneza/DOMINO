@@ -15,6 +15,8 @@ int finalizarJogo();
 int comparaLados(int peka, int livre);
 void jogadaDupla(int pecca, int livree);
 void jogadaSimples(int pecca, int livee);
+void salvarPartida(const char *arquivo);
+void carregarPartida(const char *arquivo);
 
 
 
