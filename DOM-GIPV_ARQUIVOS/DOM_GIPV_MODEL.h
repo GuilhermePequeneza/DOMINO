@@ -1,3 +1,9 @@
+//DOM-GIPV - Projeto Domino - Etapa 5
+//09/09/2025 - Grupo: GIPV
+//Guilherme Pequeneza
+//Igor Dias da Silva
+//Pedro Cione Barbosa
+//Vitor Seiji Colombo Nishida
 int maoJogador[2][21]; 
 
 char JOGADOR_ATUAL; //JOGADOR_ATUAL
