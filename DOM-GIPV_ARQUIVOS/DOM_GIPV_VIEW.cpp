@@ -97,7 +97,7 @@ char menuJogador(){
 	}
 	
 	printf("+----------------------------+\n");
-	apresentarPecasJogador(sitjogo.jogadorJogo);
+	apresentarPecasJogador();
 	do{
 		
 		printf("\n0 - Finalizar jogo\n");
@@ -135,7 +135,7 @@ void apresentarMesa(){
 	
 }
 
-void apresentarPecasJogador(char jogador){ 
+void apresentarPecasJogador(){ 
 	// ---:> DEPOIS Apresentar pessas de um jogador especifico
 	printf("----------------------------------------------------------------\n");
     if(sitjogo.jogadorJogo == '1'){

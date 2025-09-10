@@ -17,7 +17,7 @@ char menuJogador();
 
 void apresentarMesa();
 
-void apresentarPecasJogador(char jogador);
+void apresentarPecasJogador();
 
 int quantosJogadores();
 

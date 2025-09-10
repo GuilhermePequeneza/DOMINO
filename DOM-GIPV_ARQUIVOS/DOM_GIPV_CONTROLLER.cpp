@@ -144,7 +144,7 @@ void jogadaJogador(){
  		limpaTela();
  		apresentarMesa();
 		printf("Qual peça voce quer jogar?\n");
-		apresentarPecasJogador(sitjogo.jogadorJogo);
+		apresentarPecasJogador();
 		
 		char escolha;
 		scanf(" %c", &escolha);
