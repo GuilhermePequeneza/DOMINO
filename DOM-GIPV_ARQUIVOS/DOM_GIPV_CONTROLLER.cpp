@@ -37,10 +37,7 @@ void jogar(){
 						else{
 							COUNT_VEZ = 1;
 						}
-						if(sitjogo.jogadorJogo == '1')
-							sitjogo.jogadorJogo = '2';
-						else	
-							sitjogo.jogadorJogo = '1';
+							passarVez();
 							limpaTela();
 						break;
 					case '4':
@@ -119,14 +116,14 @@ void prepararJogo(){
 	primeiraJogada();
 	printf("+----------------------------+\n");
 	if(sitjogo.jogadorJogo == '1'){
-		printf("%s começou\n", nome1);
+		printf("%s comeï¿½ou\n", nome1);
 	}
 	else{
-		printf("%s começou\n", nome2);
+		printf("%s comeï¿½ou\n", nome2);
 	}
 	
 	printf("+----------------------------+\n");
-	sitjogo.jogadorJogo = (sitjogo.jogadorJogo == '2') ? '1' : '2';
+	passarVez();
 	
 	//if(sitjogo.jogadorJogo == '1')
 	//	sitjogo.jogadorJogo = '2';
@@ -150,23 +147,23 @@ void jogadaJogador(){
  	do{
  		limpaTela();
  		apresentarMesa();
-		printf("Qual peça voce quer jogar?\n");
+		printf("Qual peï¿½a voce quer jogar?\n");
 		apresentarPecasJogador();
 		
 		char escolha;
 		scanf(" %c", &escolha);
 		//fclear();
 		
-		// converte letra para índice
+		// converte letra para ï¿½ndice
 		int indiceLetra = tolower(escolha) - 'a';
 		
-		//encontrar a peça correspondente
+		//encontrar a peï¿½a correspondente
 		int contador = 0;
 		jogada = -1;
 		for(int i = 0; i < 28; i++){
 		    if(pecas[i].status == sitjogo.jogadorJogo){
 		        if(contador == indiceLetra){
-		            jogada = i; // indice real da peça no vetor `pecas`
+		            jogada = i; // indice real da peï¿½a no vetor `pecas`
 		            break;
 		        }
 		        contador++;
@@ -180,8 +177,8 @@ void jogadaJogador(){
 		fclear();
 		
 		if((pecas[jogada].status != sitjogo.jogadorJogo) || ((pecas[jogada].lado1 != mesa[0].ladoE && pecas[jogada].lado2 != mesa[0].ladoE) && (pecas[jogada].lado1 != mesa[livreDireita - 1].ladoD && pecas[jogada].lado2 != mesa[livreDireita - 1].ladoD))){
-			//Ve se a peca ta na mão dele e se estiver se pode ser colocada em uma das extremidades da mesa(ta grande eu sei, não gostou faz melhor :) )
-			printf("Peça inválida. Gostaria de jogar outra peça?(S/N)\n");
+			//Ve se a peca ta na mï¿½o dele e se estiver se pode ser colocada em uma das extremidades da mesa(ta grande eu sei, nï¿½o gostou faz melhor :) )
+			printf("Peï¿½a invï¿½lida. Gostaria de jogar outra peï¿½a?(S/N)\n");
 			tentarDenovo = getchar();
 		
 		} 
@@ -201,19 +198,29 @@ void jogadaJogador(){
 	}while(erro == 1 && (tentarDenovo == 'S' || tentarDenovo == 's'));//Repete a escolha da peca enquanto digitar SIM(s ou S)
 	
 	if(erro == 0){
-	if(sitjogo.jogadorJogo == '1')
-		sitjogo.jogadorJogo = '2';
-	else
-		sitjogo.jogadorJogo = '1';
+	passarVez();
 	}
 	limpaTela();
 }
 
-/*
+
 void jogadaComputador(){
+	peca jogavel = 0;
+	
+	for(int i = 0; i<27;i++){
+		if (peca[i].lado1 == sitjogo.mesaDJogo || peca[i].lado1 == sitjogo.mesaEJogo || peca[i].lado2 == sitjogo.mesaDJogo || peca[i].lado2 == sitjogo.mesaEJogo){
+			pecajogavel = 1;
+		}
+		
+	}
+	if (pecajogavel = 0){
+		if (pecas[27].status != 'N'){
+			passarVez();
+		}
+	}
 	
 }
-*/
+
 
 // for loop vendo atï¿½ quando o array mesa ï¿½ diferente de 0
 //o i que for 0 ï¿½ a prï¿½xima jogada
@@ -292,7 +299,7 @@ void jogadaDupla(int pecca, int livree){
 		lado = getchar();
 		fclear();
 		if(lado != 'E' && lado != 'e' && lado != 'D' && lado != 'd'){
-			printf("Carácter inválido. Tente novamente");
+			printf("Carï¿½cter invï¿½lido. Tente novamente");
 			system("pause");
 			limpaTela();
 		}
@@ -390,7 +397,7 @@ int jogoTrancado(){ //Caso onde o jogo tranca
 				soma1 += pecas[i].lado1 + pecas[i].lado2; 
 
 			}
-				if(pecas[i].status == '2'){
+			if(pecas[i].status == '2'){
 				count2++;
 				soma2 += pecas[i].lado1 + pecas[i].lado2; 
 			}
@@ -399,7 +406,7 @@ int jogoTrancado(){ //Caso onde o jogo tranca
 			}
 		}
 	
-		if (soma1 > soma2){ //mensagem de saída
+		if (soma1 > soma2){ //mensagem de saï¿½da
 			printf("%s ganho com %d total de pontos\n",nome1, soma1);
 			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
 			return 0;
@@ -418,6 +425,13 @@ int jogoTrancado(){ //Caso onde o jogo tranca
 	}
 }
 
+void passarVez(){
+	if(sitjogo.jogadorJogo == '1')
+		sitjogo.jogadorJogo = '2';
+	else
+		sitjogo.jogadorJogo = '1';
+}
+
 void salvarPartida(const char *arquivo) {
     FILE *fp = fopen(arquivo, "wb");
     if (!fp) {
@@ -429,11 +443,11 @@ void salvarPartida(const char *arquivo) {
     fwrite(nome1, sizeof(nome1), 1, fp);
     fwrite(nome2, sizeof(nome2), 1, fp);
 
-    // Salva variáveis globais
+    // Salva variï¿½veis globais
     fwrite(&JOGADOR_ATUAL, sizeof(JOGADOR_ATUAL), 1, fp);
     fwrite(&COUNT_VEZ, sizeof(COUNT_VEZ), 1, fp);
 
-    // Salva peças
+    // Salva peï¿½as
     fwrite(pecas, sizeof(pecas), 1, fp);
 
     // Salva mesa
@@ -459,11 +473,11 @@ void carregarPartida(const char *arquivo) {
     fread(nome1, sizeof(nome1), 1, fp);
     fread(nome2, sizeof(nome2), 1, fp);
 
-    // Carrega variáveis globais
+    // Carrega variï¿½veis globais
     fread(&JOGADOR_ATUAL, sizeof(JOGADOR_ATUAL), 1, fp);
     fread(&COUNT_VEZ, sizeof(COUNT_VEZ), 1, fp);
 
-    // Carrega peças
+    // Carrega peï¿½as
     fread(pecas, sizeof(pecas), 1, fp);
 
     // Carrega mesa
