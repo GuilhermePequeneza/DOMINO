@@ -17,6 +17,6 @@ void jogadaDupla(int pecca, int livree);
 void jogadaSimples(int pecca, int livee);
 void salvarPartida(const char *arquivo);
 void carregarPartida(const char *arquivo);
-
+int jogoTrancado();
 
 

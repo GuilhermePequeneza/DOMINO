@@ -9,50 +9,57 @@
 
 void jogar(){
 	char op;
-	do{
-		finalizarJogo();
-		op = menuGeral();
-		limpaTela();
-		switch(op)
-		{
-			case '1':
-				embaralharPecas();
-				prepararJogo();
-				do{
-					op = menuJogador();
-					switch(op)
-					{
-						case '1':
-							jogadaJogador();
-							//printf("return: %d ",finalizarJogo() );
-							break;
-						case '2':
-							comprarPecas();
-							break;
-						case '3':
-							if(sitjogo.jogadorJogo == '1')
-								sitjogo.jogadorJogo = '2';
-							else
-								sitjogo.jogadorJogo = '1';
-								limpaTela();
-							break;
-						case '4':
-							mostrarRegras();
-							break;
-						case '5':
-    						salvarPartida("savegame.dat");
-    						break;
-    					case '6':
-    						carregarPartida("savegame.dat");
-    						break;
-					}
-				}while(op != '0' && finalizarJogo() == 0);
-				break;
-			case '0':
-				exit(0);
-				break;
-		}
-	}while(0);
+
+	finalizarJogo();
+	op = menuGeral();
+	limpaTela();
+	switch(op)
+	{
+		case '1':
+			embaralharPecas();
+			prepararJogo();
+			do{					
+				op = menuJogador();
+				switch(op)
+				{
+					case '1':
+						COUNT_VEZ = 0;
+						jogadaJogador();
+						//printf("return: %d ",finalizarJogo() );
+						break;
+					case '2':
+						comprarPecas();
+						break;
+					case '3':
+						if(COUNT_VEZ == 1){
+							COUNT_VEZ = 2;
+						}
+						else{
+							COUNT_VEZ = 1;
+						}
+						if(sitjogo.jogadorJogo == '1')
+							sitjogo.jogadorJogo = '2';
+						else	
+							sitjogo.jogadorJogo = '1';
+							limpaTela();
+						break;
+					case '4':
+						mostrarRegras();
+						break;
+					case '5':
+						salvarPartida("savegame.dat");
+						break;
+					case '6':
+						carregarPartida("savegame.dat");
+						break;
+				}
+			}while(op != '0' && finalizarJogo() == 0 && jogoTrancado() != 0);
+			break;
+		case '0':
+			exit(0);
+			break;
+	}
+
 }
 
 void primeiraJogada() {
@@ -367,7 +374,7 @@ void jogadaSimples(int pecca, int livee){
 		}
 }
 
-int JogoTrancado(){ //Caso onde o jogo tranca
+int jogoTrancado(){ //Caso onde o jogo tranca
 	
 	int count1=0;
 	int count2=0;
@@ -393,16 +400,21 @@ int JogoTrancado(){ //Caso onde o jogo tranca
 		}
 	
 		if (soma1 > soma2){ //mensagem de saída
+			printf("%s ganho com %d total de pontos\n",nome1, soma1);
 			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
-			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
+			return 0;
 		if(soma2 > soma1){
-			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
-			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
+			printf("%s perdeu com %d total de pontos\n",nome1, soma1);
+			printf("%s ganhou com %d total de pontos\n",nome2, soma2);
+			return 0;
 		}
 		else 
 			printf("Os jogadores empataram na quantidade de pontos: j1 %d = j2 %d",soma1,soma2);
-
+			return 0;
 		}
+	}
+	else{
+		return 1;
 	}
 }
 
