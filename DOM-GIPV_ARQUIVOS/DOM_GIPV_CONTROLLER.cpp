@@ -205,15 +205,15 @@ void jogadaJogador(){
 
 
 void jogadaComputador(){
-	peca jogavel = 0;
+	int pecajogavel = 0;
 	
 	for(int i = 0; i<27;i++){
-		if (peca[i].lado1 == sitjogo.mesaDJogo || peca[i].lado1 == sitjogo.mesaEJogo || peca[i].lado2 == sitjogo.mesaDJogo || peca[i].lado2 == sitjogo.mesaEJogo){
+		if(pecas[i].lado1 == sitjogo.mesaDJogo || pecas[i].lado1 == sitjogo.mesaEJogo || pecas[i].lado2 == sitjogo.mesaDJogo || pecas[i].lado2 == sitjogo.mesaEJogo){
 			pecajogavel = 1;
 		}
 		
 	}
-	if (pecajogavel = 0){
+	if(pecajogavel = 0){
 		if (pecas[27].status != 'N'){
 			passarVez();
 		}
