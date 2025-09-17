@@ -31,14 +31,20 @@ void jogar(){
 						comprarPecas();
 						break;
 					case '3':
-						if(COUNT_VEZ == 1){
-							COUNT_VEZ = 2;
+						if(pecas[27].status == 'N'){
+							printf("Ainda há peças a serem compradas.\n");
+							system("pause");
 						}
-						else{
-							COUNT_VEZ = 1;
+						else{	
+							if(COUNT_VEZ == 1){
+								COUNT_VEZ = 2;
+							}
+							else{
+								COUNT_VEZ = 1;
+							}
+								passarVez();
 						}
-							passarVez();
-							limpaTela();
+						limpaTela();
 						break;
 					case '4':
 						mostrarRegras();
@@ -178,7 +184,7 @@ void jogadaJogador(){
 		
 		if((pecas[jogada].status != sitjogo.jogadorJogo) || ((pecas[jogada].lado1 != mesa[0].ladoE && pecas[jogada].lado2 != mesa[0].ladoE) && (pecas[jogada].lado1 != mesa[livreDireita - 1].ladoD && pecas[jogada].lado2 != mesa[livreDireita - 1].ladoD))){
 			//Ve se a peca ta na mï¿½o dele e se estiver se pode ser colocada em uma das extremidades da mesa(ta grande eu sei, nï¿½o gostou faz melhor :) )
-			printf("Peï¿½a invï¿½lida. Gostaria de jogar outra peï¿½a?(S/N)\n");
+			printf("Peça inválida. Gostaria de jogar outra peça?(S/N)\n");
 			tentarDenovo = getchar();
 		
 		} 
@@ -407,12 +413,12 @@ int jogoTrancado(){ //Caso onde o jogo tranca
 		}
 	
 		if (soma1 > soma2){ //mensagem de saï¿½da
-			printf("%s ganho com %d total de pontos\n",nome1, soma1);
-			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
-			return 0;
-		if(soma2 > soma1){
 			printf("%s perdeu com %d total de pontos\n",nome1, soma1);
 			printf("%s ganhou com %d total de pontos\n",nome2, soma2);
+			return 0;
+		if(soma2 > soma1){
+			printf("%s ganhou com %d total de pontos\n",nome1, soma1);
+			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
 			return 0;
 		}
 		else 
@@ -466,7 +472,7 @@ void carregarPartida(const char *arquivo) {
     FILE *fp = fopen(arquivo, "rb");
     if (!fp) {
         printf("Nenhum save encontrado!\n");
-        return;
+        //return;
     }
 
     // Carrega nomes
