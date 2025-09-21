@@ -28,7 +28,9 @@ void jogar(){
 						//printf("return: %d ",finalizarJogo() );
 						break;
 					case '2':
-						comprarPecas();
+						if(jogadaPossivel() == 0){
+							comprarPecas();
+						}
 						break;
 					case '3':
 						if(pecas[27].status == 'N'){
@@ -122,10 +124,10 @@ void prepararJogo(){
 	primeiraJogada();
 	printf("+----------------------------+\n");
 	if(sitjogo.jogadorJogo == '1'){
-		printf("%s comeï¿½ou\n", nome1);
+		printf("%s começou\n", nome1);
 	}
 	else{
-		printf("%s comeï¿½ou\n", nome2);
+		printf("%s começou\n", nome2);
 	}
 	
 	printf("+----------------------------+\n");
@@ -153,7 +155,7 @@ void jogadaJogador(){
  	do{
  		limpaTela();
  		apresentarMesa();
-		printf("Qual peï¿½a voce quer jogar?\n");
+		printf("Qual peça voce quer jogar?\n");
 		apresentarPecasJogador();
 		
 		char escolha;
@@ -305,7 +307,7 @@ void jogadaDupla(int pecca, int livree){
 		lado = getchar();
 		fclear();
 		if(lado != 'E' && lado != 'e' && lado != 'D' && lado != 'd'){
-			printf("Carï¿½cter invï¿½lido. Tente novamente");
+			printf("Carácter inválido. Tente novamente");
 			system("pause");
 			limpaTela();
 		}
@@ -333,11 +335,14 @@ void jogadaDupla(int pecca, int livree){
 			if(mesa[livree - 1].ladoD == pecas[pecca].lado1){
 				mesa[livree].ladoE = pecas[pecca].lado1;
 				mesa[livree].ladoD = pecas[pecca].lado2;
-					
+				sitjogo.mesaDJogo = pecas[pecca].lado2;
+				sitjogo.mesaEJogo = pecas[pecca].lado1;	
 			}
 			else{
 				mesa[livree].ladoD = pecas[pecca].lado1;
 				mesa[livree].ladoE = pecas[pecca].lado2;	
+				sitjogo.mesaDJogo = pecas[pecca].lado1;
+				sitjogo.mesaEJogo = pecas[pecca].lado2;
 					
 			}
 			pecas[pecca].status = 'M';
@@ -357,6 +362,10 @@ void jogadaSimples(int pecca, int livee){
 			}
 			mesa[0].ladoD = pecas[pecca].lado2;
 			mesa[0].ladoE = pecas[pecca].lado1;
+			
+			sitjogo.mesaDJogo = pecas[pecca].lado2;
+			sitjogo.mesaEJogo = pecas[pecca].lado1;
+			
 			pecas[pecca].status = 'M';
 		}
 		else if(mesa[0].ladoE == pecas[pecca].lado1) //indice 1 pq vai tudo pra direita       //PARTE DE JOGAR FAZER DEPOIS.
@@ -368,6 +377,10 @@ void jogadaSimples(int pecca, int livee){
 			}
 			mesa[0].ladoE = pecas[pecca].lado2;
 			mesa[0].ladoD = pecas[pecca].lado1;
+			
+			sitjogo.mesaDJogo = pecas[pecca].lado2;
+			sitjogo.mesaEJogo = pecas[pecca].lado1;
+				
 			pecas[pecca].status = 'M';
 	
 		}
@@ -376,6 +389,10 @@ void jogadaSimples(int pecca, int livee){
 			mesa[livee].status = '1';
 			mesa[livee].ladoD = pecas[pecca].lado2;
 			mesa[livee].ladoE = pecas[pecca].lado1;
+			
+			sitjogo.mesaDJogo = pecas[pecca].lado2;
+			sitjogo.mesaEJogo = pecas[pecca].lado1;
+			
 			pecas[pecca].status = 'M';
 		}
 		else if(mesa[livee-1].ladoD == pecas[pecca].lado2)//lado direito da mesa em comparaï¿½ï¿½o com o lado esquerdo da peca
@@ -383,6 +400,10 @@ void jogadaSimples(int pecca, int livee){
 			mesa[livee].status = '1';
 			mesa[livee].ladoD = pecas[pecca].lado1;
 			mesa[livee].ladoE = pecas[pecca].lado2;
+			
+			sitjogo.mesaDJogo = pecas[pecca].lado1;
+			sitjogo.mesaEJogo = pecas[pecca].lado2;
+			
 			pecas[pecca].status = 'M';
 		}
 }
@@ -496,6 +517,20 @@ void carregarPartida(const char *arquivo) {
     printf("Partida carregada de %s!\n", arquivo);
     system("pause");
     limpaTela();
+}
+
+//Confirma se é possível o jogador realizar alguma jogada com as peças que ele tem em mão
+int jogadaPossivel(){
+	for(int i = 0; i < 28; i++){
+		if(pecas[i].status == sitjogo.jogadorJogo && ((pecas[i].lado1 == sitjogo.mesaDJogo || pecas[i].lado1 == sitjogo.mesaEJogo) || (pecas[i].lado2 == sitjogo.mesaDJogo || pecas[i].lado2 == sitjogo.mesaEJogo))){
+			printf("Jogada possível de ser feita\n");
+			system("pause");
+			limpaTela();
+			return 1;
+		}
+	}
+	
+	return 0;
 }
 
 

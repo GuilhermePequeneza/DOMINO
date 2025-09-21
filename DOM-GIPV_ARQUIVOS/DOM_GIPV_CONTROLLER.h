@@ -8,7 +8,6 @@ void jogar();
 void prepararJogo();
 void primeiraJogada();
 void jogadaJogador();
-//void jogadaComputador();
 int proximaJogada();
 void comprarPecas();
 int finalizarJogo();
@@ -19,5 +18,6 @@ void passarVez();
 void salvarPartida(const char *arquivo);
 void carregarPartida(const char *arquivo);
 int jogoTrancado();
-
+int jogadaPossivel();
+//void jogadaComputador();
 
