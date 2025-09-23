@@ -19,29 +19,7 @@ void exibirPecas() {
 	printf("\n");
 }
 
-void querCarregar(){
-    char op;
-    printf("Gostaria de carregar uma partida salva(S/N)?\n");
 
-    do{
-        scanf(" %c", &op); 
-        if ((op != 's' && op != 'S') && (op != 'n' && op != 'N') && op != '0') {
-            printf("Carácter inválido. Tente novamente (0 para sair): ");
-            continue; 
-        }
-
-        if(op == 's' || op == 'S'){
-            carregarPartida("savegame.dat");
-        }
-
-        if(op == '0'){
-            break; 
-        }
-
-    } while(op != 'n' && op != 'N');
-
-    limpaTela();
-}
 
 int quantosJogadores(){
      int quantJog = 0;
@@ -86,40 +64,44 @@ char menuGeral(){
 char menuJogador(){
 
 	char op;
-	//limpaTela(); 
-	apresentarMesa();
-	printf("+----------------------------+\n");
-	if(sitjogo.jogadorJogo == '1'){
-		printf("Vez de %s\n", nome1);
-	}
-	else{
-		printf("Vez de %s\n", nome2);
-	}
+	do{//limpaTela(); 
+		apresentarMesa();
+		printf("+----------------------------+\n");
+		if(sitjogo.jogadorJogo == '1'){
+			printf("Vez de %s\n", nome1);
+		}
+		else{
+			printf("Vez de %s\n", nome2);
+		}
+		
+		printf("+----------------------------+\n");
+		apresentarPecasJogador();
 	
-	printf("+----------------------------+\n");
-	apresentarPecasJogador();
-	do{
 		
 		printf("\n0 - Finalizar jogo\n");
 		printf("1 - Jogar\n");
 		printf("2 - Comprar\n");
 		printf("3 - Passar\n");
 		printf("4 - Regras do jogo\n");
-		printf("5 - Salvar jogo\n");
-		printf("6 - Carregar partida\n");
-		//printf("6 - Carregar jogo\n");	
+		printf("5 - Salvar jogo\n");	
 		printf("Escolha uma opção: ");
 		op = getchar();
-		if(op == 3) { COUNT_VEZ++; } //pensei em colocar uma condiÃ§Ã£o para toda vez que op for 3, ele adicionar +1 na variavel global
+		if(op == 3) { 
+			COUNT_VEZ++; 
+		} //pensei em colocar uma condiÃ§Ã£o para toda vez que op for 3, ele adicionar +1 na variavel global
 		// nao esquecer da viarvel global para poder ver toda vez que ele passar mais de uma vez
 		
 		fclear();
-		if(op >= '0' || op <= '3')
+		if(op >= '0' && op <= '5')
 		{
 			return op;
 		} 
-		else
-			printf("Escolha inválida");
+		else{
+			printf("Escolha inválida. Tente novamente\n");
+			system("pause");
+			limpaTela();
+		}
+			
 		
 		limpaTela(); 
 	}while(1);

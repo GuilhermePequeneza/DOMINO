@@ -16,20 +16,35 @@ void jogar(){
 	switch(op)
 	{
 		case '1':
-			embaralharPecas();
-			prepararJogo();
+			if(!partidaCarregada){
+				embaralharPecas();
+				prepararJogo();
+			}
+			
 			do{					
 				op = menuJogador();
 				switch(op)
 				{
 					case '1':
 						COUNT_VEZ = 0;
-						jogadaJogador();
+						if(jogadaPossivel() == 1){
+							jogadaJogador();
+						}
+						else{
+							printf("Não há peças possíveis de serem jogadas\n.");
+							system("pause");
+							limpaTela();
+						}
 						//printf("return: %d ",finalizarJogo() );
 						break;
 					case '2':
 						if(jogadaPossivel() == 0){
 							comprarPecas();
+						}
+						else{
+							printf("Existem peças possíveis de serem jogadas\n");
+							system("pause");
+							limpaTela();
 						}
 						break;
 					case '3':
@@ -53,9 +68,6 @@ void jogar(){
 						break;
 					case '5':
 						salvarPartida("savegame.dat");
-						break;
-					case '6':
-						carregarPartida("savegame.dat");
 						break;
 				}
 			}while(op != '0' && finalizarJogo() == 0 && jogoTrancado() != 0);
@@ -489,22 +501,23 @@ void salvarPartida(const char *arquivo) {
     limpaTela();
 }
 
-void carregarPartida(const char *arquivo) {
+int carregarPartida(const char *arquivo) {
     FILE *fp = fopen(arquivo, "rb");
     if (!fp) {
         printf("Nenhum save encontrado!\n");
-        //return;
+        system("pause");
+        return 0; // ? RETORNA 0 SE NÃO CONSEGUIR CARREGAR
     }
 
     // Carrega nomes
     fread(nome1, sizeof(nome1), 1, fp);
     fread(nome2, sizeof(nome2), 1, fp);
 
-    // Carrega variï¿½veis globais
+    // Carrega variáveis globais
     fread(&JOGADOR_ATUAL, sizeof(JOGADOR_ATUAL), 1, fp);
     fread(&COUNT_VEZ, sizeof(COUNT_VEZ), 1, fp);
 
-    // Carrega peï¿½as
+    // Carrega peças
     fread(pecas, sizeof(pecas), 1, fp);
 
     // Carrega mesa
@@ -517,20 +530,53 @@ void carregarPartida(const char *arquivo) {
     printf("Partida carregada de %s!\n", arquivo);
     system("pause");
     limpaTela();
+    
+    return 1; // ? RETORNA 1 SE CARREGOU COM SUCESSO
 }
 
 //Confirma se é possível o jogador realizar alguma jogada com as peças que ele tem em mão
 int jogadaPossivel(){
 	for(int i = 0; i < 28; i++){
 		if(pecas[i].status == sitjogo.jogadorJogo && ((pecas[i].lado1 == sitjogo.mesaDJogo || pecas[i].lado1 == sitjogo.mesaEJogo) || (pecas[i].lado2 == sitjogo.mesaDJogo || pecas[i].lado2 == sitjogo.mesaEJogo))){
-			printf("Jogada possível de ser feita\n");
-			system("pause");
-			limpaTela();
 			return 1;
 		}
 	}
 	
 	return 0;
+}
+
+int querCarregar(){
+    char op;
+    int partidaCarregada = 0;
+    
+    printf("Gostaria de carregar uma partida salva(S/N)?\n");
+
+    do{
+        scanf(" %c", &op); 
+        fclear();
+        
+        if ((op != 's' && op != 'S') && (op != 'n' && op != 'N') && op != '0') {
+            printf("Carácter inválido. Tente novamente (0 para sair): ");
+            continue; 
+        }
+
+        if(op == 's' || op == 'S'){
+            partidaCarregada = carregarPartida("savegame.dat");
+            break;
+        }
+        
+        if(op == 'n' || op == 'N'){
+            break;
+        }
+
+        if(op == '0'){
+            exit(0);
+        }
+
+    } while(1);
+
+    limpaTela();
+    return partidaCarregada;
 }
 
 

@@ -16,8 +16,8 @@ void jogadaDupla(int pecca, int livree);
 void jogadaSimples(int pecca, int livee);
 void passarVez();
 void salvarPartida(const char *arquivo);
-void carregarPartida(const char *arquivo);
+int carregarPartida(const char *arquivo);
 int jogoTrancado();
 int jogadaPossivel();
 //void jogadaComputador();
-
+int querCarregar();

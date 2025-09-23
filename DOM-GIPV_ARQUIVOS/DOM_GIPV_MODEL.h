@@ -5,6 +5,7 @@
 //Pedro Cione Barbosa
 //Vitor Seiji Colombo Nishida
 int maoJogador[2][21]; 
+int partidaCarregada;
 
 char JOGADOR_ATUAL; //JOGADOR_ATUAL
 int COUNT_VEZ = 0; //QTD DE VEZES QUE OP FOI 3

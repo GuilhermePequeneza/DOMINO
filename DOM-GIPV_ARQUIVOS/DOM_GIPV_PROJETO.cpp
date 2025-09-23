@@ -11,14 +11,20 @@
 
 main()
 {	
-	setlocale(LC_ALL,"");
-	mostrarRegras();
-	quantosJogadores(); //VIEW
-	//system("pause");
-	gerarPecas(); //--:> MODEL
-	jogar(); //--:> CONTROLLER
-	
+    setlocale(LC_ALL,"");
+    mostrarRegras();
+    
+    // Pergunta se quer carregar partida salva
+    partidaCarregada = querCarregar();
+    
+    if(partidaCarregada) {
+        printf("Partida carregada! Continuando jogo...\n");
+        system("pause");
+    } else {
+        // Só configura novo jogo se não carregou
+        quantosJogadores();
+        gerarPecas(); // SÓ gera peças para jogo novo
+    }
+    
+    jogar();
 }
-
-
-

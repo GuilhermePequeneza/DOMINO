@@ -27,4 +27,4 @@ void mostrarRegras();
 
 void boasVindas(); // a fazer
 
-void querCarregar();
+
