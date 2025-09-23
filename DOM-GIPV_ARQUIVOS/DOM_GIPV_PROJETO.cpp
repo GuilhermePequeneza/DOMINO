@@ -11,20 +11,9 @@
 
 main()
 {	
+	
     setlocale(LC_ALL,"");
+    boasVindas();
     mostrarRegras();
-    
-    // Pergunta se quer carregar partida salva
-    partidaCarregada = querCarregar();
-    
-    if(partidaCarregada) {
-        printf("Partida carregada! Continuando jogo...\n");
-        system("pause");
-    } else {
-        // Só configura novo jogo se não carregou
-        quantosJogadores();
-        gerarPecas(); // SÓ gera peças para jogo novo
-    }
-    
     jogar();
 }

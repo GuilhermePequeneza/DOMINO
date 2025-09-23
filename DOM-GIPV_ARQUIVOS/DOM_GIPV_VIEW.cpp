@@ -29,9 +29,10 @@ int quantosJogadores(){
        scanf("%d", &quantJog);
        fclear();
        if(quantJog == 1){
-       	printf("Nome jogador 1:");
+       	printf("\nNome jogador 1: ");
        	gets(nome1);
        	strcpy(nome2, "Pequenezza A.I");//easter egg
+       	sitjogo.jogadorComp = 2;
 	   }
 	   else{
 	   	printf("\nNome jogador 1: ");
@@ -40,33 +41,44 @@ int quantosJogadores(){
 	   	gets(nome2);
 	   }
        
- 	}while(quantJog == 0);
- 	return quantJog;
+ 	}while(quantJog != 1 && quantJog != 2);
+ 	limpaTela();
+ 	
+	return quantJog;
 }
 	
 char menuGeral(){
-	char op;
-	
-	do {
-		limpaTela();
-		printf("0 - SAIR\n");
-		printf("1 - Começar Jogo\n");
-		printf("Escolha uma opção: ");
-		op = getchar();
-		fclear();
-		if(op <= '0' || op >= '1'){
-			return op;
-		}
-	} while(1);
+    
+    char op;
+    
+    do {
+        limpaTela();
+        printf("----------- DOMINÓ -----------\n\n");
+        printf("0 - Sair\n");
+        printf("1 - Começar Jogo Novo\n");
+        printf("2 - Carregar Partida Salva\n\n");
+        printf("------------------------------\n\n");
+        printf("Escolha: ");
+        
+        op = getchar();
+        fclear();
+        if(op >= '0' && op <= '2'){
+            return op;
+        }
+        else {
+            printf("Opção inválida. Pressione Enter...\n");
+            getchar();
+        }
+    } while(1);
 	
 }
 
 char menuJogador(){
 
 	char op;
-	do{//limpaTela(); 
+	do{
 		apresentarMesa();
-		printf("+----------------------------+\n");
+		printf("----------------\n");
 		if(sitjogo.jogadorJogo == '1'){
 			printf("Vez de %s\n", nome1);
 		}
@@ -74,7 +86,7 @@ char menuJogador(){
 			printf("Vez de %s\n", nome2);
 		}
 		
-		printf("+----------------------------+\n");
+		printf("----------------\n\n");
 		apresentarPecasJogador();
 	
 		
@@ -108,33 +120,89 @@ char menuJogador(){
 }
 
 void apresentarMesa(){
-	printf("\nMesa:\n\n");
-	
-	for(int i = 0; mesa[i].status != '0'; i++){
-		printf("[%d|%d] ",mesa[i].ladoE, mesa[i].ladoD);
-	}
-	printf("\n\n");
+	printf("\n");
+    
+    //conta quantas peças estão na mesa
+    int pecasNaMesa = 0;
+    for(int i = 0; mesa[i].status != '0'; i++){
+        pecasNaMesa++;
+    }
+    
+    if(pecasNaMesa == 0) {
+        printf("Mesa: (vazia)\n");
+        return; //se a mesa for vazia interrompe a função 
+    }
+    
+    //calcula o tamanho da linha baseado no número de peças
+    int tamanhoLinha = (pecasNaMesa * 6) ; //8 caracteres por peça 
+    
+    //linha superior
+    printf("Mesa: ");
+    for(int i = 0; i < tamanhoLinha; i++) printf("-");
+    printf("\n");
+    
+    //linha com as peças
+    printf("      ");
+    for(int i = 0; mesa[i].status != '0'; i++){
+        printf("[%d|%d] ", mesa[i].ladoE, mesa[i].ladoD);
+    }
+    printf("\n");
+    
+    //linha inferior
+    printf("      ");
+    for(int i = 0; i < tamanhoLinha; i++) printf("-");
+    printf("\n");
+    
+    // Mostra extremidades
+    printf("      Extremidades: [%d] - [%d]\n", sitjogo.mesaEJogo, sitjogo.mesaDJogo);
+    printf("\n");
 	
 }
 
 void apresentarPecasJogador(){ 
 	// ---:> DEPOIS Apresentar pessas de um jogador especifico
-	printf("----------------------------------------------------------------\n");
-    if(sitjogo.jogadorJogo == '1'){
-		printf("Peças de %s\n\n", nome1);
-	}
-	else{
-		printf("Peças de %s\n\n", nome2);
-	}
-
-    int indiceLetra = 0; //mostra letras em vez de números(bem melhor)
+	int pecasJogador = 0;
     for(int i = 0; i < 28; i++){
         if(pecas[i].status == sitjogo.jogadorJogo){
-            printf("%c.[%d|%d]  ", 'a' + indiceLetra, pecas[i].lado1, pecas[i].lado2);
-            indiceLetra++;
+            pecasJogador++;
         }
     }
-    printf("\n----------------------------------------------------------------\n");
+    
+    
+    //calcula o tamanho da linha baseado no número de peças
+    int tamanhoLinha = (pecasJogador * 8); //8 caracteres por peça 
+    int contador = 0; //indice alfabetico das peças
+    
+    printf("Peças: \n\n");
+    //printf("       ");
+    for(int i = 0; i < tamanhoLinha; i++){
+    	printf("-");
+	}
+		
+    printf("\n");
+    
+    //linha com as peças
+    //printf("       ");
+    printf("\n");
+    for(int i = 0; i < 28; i++){
+        if(pecas[i].status == sitjogo.jogadorJogo){
+            printf("%c.", 'a' + contador);
+			
+			printf("[%d|%d] ", pecas[i].lado1, pecas[i].lado2);
+			
+            contador++;
+        }
+    }
+	printf("\n");
+    
+    // Linha inferior
+    //printf("       ");
+    printf("\n");
+    for(int i = 0; i < tamanhoLinha; i++){
+    	printf("-");
+	}
+		
+    printf("\n\n");
 }
 
 void fclear(){
@@ -159,10 +227,18 @@ void mostrarRegras(){
     limpaTela();
 }
 
-/*void boasVindas(){
-	printf("					Bem-Vindo						\n");
-
+void boasVindas(){
+	printf("\n						   Bem-Vindo						\n");
+	printf("-----------------------------------------------------------------------------------------------------------------------\n");
+	printf("\nEste é um jogo de dominó produzido como parte de trabalho educacional da Pontifícia Universidade Católica de São Paulo\n\n");
+	printf("\nAlunos: \n");
+	printf("Igor Dias da Silva\n");
+	printf("Guilherme Pequeneza\n");
+	printf("Pedro Cione Barbosa\n");
+	printf("Vitor Seiji Colombo Nishida\n\n");
+	printf("-----------------------------------------------------------------------------------------------------------------------\n");
+	system("pause");
+    limpaTela();
 }
-*/
-//Função para exibir uma tela inicial, terminar depois
+
 

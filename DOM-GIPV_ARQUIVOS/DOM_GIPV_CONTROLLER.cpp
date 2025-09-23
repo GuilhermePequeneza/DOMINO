@@ -10,72 +10,139 @@
 void jogar(){
 	char op;
 
-	finalizarJogo();
-	op = menuGeral();
-	limpaTela();
-	switch(op)
-	{
-		case '1':
-			if(!partidaCarregada){
-				embaralharPecas();
-				prepararJogo();
-			}
-			
-			do{					
-				op = menuJogador();
-				switch(op)
-				{
-					case '1':
-						COUNT_VEZ = 0;
-						if(jogadaPossivel() == 1){
-							jogadaJogador();
-						}
-						else{
-							printf("Não há peças possíveis de serem jogadas\n.");
-							system("pause");
-							limpaTela();
-						}
-						//printf("return: %d ",finalizarJogo() );
-						break;
-					case '2':
-						if(jogadaPossivel() == 0){
-							comprarPecas();
-						}
-						else{
-							printf("Existem peças possíveis de serem jogadas\n");
-							system("pause");
-							limpaTela();
-						}
-						break;
-					case '3':
-						if(pecas[27].status == 'N'){
-							printf("Ainda há peças a serem compradas.\n");
-							system("pause");
-						}
-						else{	
-							if(COUNT_VEZ == 1){
-								COUNT_VEZ = 2;
-							}
-							else{
-								COUNT_VEZ = 1;
-							}
-								passarVez();
-						}
-						limpaTela();
-						break;
-					case '4':
-						mostrarRegras();
-						break;
-					case '5':
-						salvarPartida("savegame.dat");
-						break;
-				}
-			}while(op != '0' && finalizarJogo() == 0 && jogoTrancado() != 0);
-			break;
-		case '0':
-			exit(0);
-			break;
-	}
+    finalizarJogo();
+    op = menuGeral();
+    limpaTela();
+    switch(op)
+    {
+        case '1': // Jogo novo
+            // Configura novo jogo
+            quantosJogadores();
+            gerarPecas();
+            embaralharPecas();
+            prepararJogo();
+            
+            // Loop principal do jogo
+            do{
+                // Se for a vez da IA, joga automaticamente
+                if(sitjogo.jogadorJogo == '2' && sitjogo.jogadorComp == 2) {
+                    jogadaComputador();
+                } else {
+                    // Jogador humano
+                    op = menuJogador();
+                    switch(op)
+                    {
+                        case '1':
+                            COUNT_VEZ = 0;
+                            if(jogadaPossivel() == 1){
+                                jogadaJogador();
+                            }
+                            else{
+                                printf("Não há peças possíveis de serem jogadas");
+                               	system("pause");
+                            }
+                            break;
+                        case '2':
+                            if(jogadaPossivel() == 0){
+                                comprarPecas();
+                            }
+                            else{
+                                printf("Existem peças possíveis de serem jogadas");
+                                system("pause");
+                                
+                            }
+                            break;
+                        case '3':
+                            if(pecas[27].status == 'N'){
+                                printf("Ainda há peças a serem compradas");
+                            	system("pause");
+                            }
+                            else{
+                                if(COUNT_VEZ == 1){
+                                    COUNT_VEZ = 2;
+                                }
+                                else{
+                                    COUNT_VEZ = 1;
+                                }
+                                passarVez();
+                            }
+                            break;
+                        case '4':
+                            mostrarRegras();
+                            break;
+                        case '5':
+                            salvarPartida("savegame.dat");
+                            break;
+                    }
+                }
+            }while(op != '0' && finalizarJogo() == 0 && jogoTrancado() != 0);
+            break;
+            
+        case '2': //carregar partida salva
+            if(carregarPartida("savegame.dat")) {
+                printf("Partida carregada com sucesso");
+                
+                // Loop principal do jogo (mesmo do caso '1')
+                do{
+                    if(sitjogo.jogadorJogo == '2' && sitjogo.jogadorComp == 2) {
+                        jogadaComputador();
+                    } else {
+                        op = menuJogador();
+                        switch(op)
+                        {
+                            case '1':
+                                COUNT_VEZ = 0;
+                                if(jogadaPossivel() == 1){
+                                    jogadaJogador();
+                                }
+                                else{
+                                    printf("Não há peças possíveis de serem jogadas");
+                                    system("pause");
+                                }
+                                break;
+                            case '2':
+                                if(jogadaPossivel() == 0){
+                                    comprarPecas();
+                                }
+                                else{
+                                    printf("Existem peças possíveis de serem jogadas");
+                                    system("pause");
+                                }
+                                break;
+                            case '3':
+                                if(pecas[27].status == 'N'){
+                                    printf("Ainda há peças a serem compradas");
+                                    system("pause");
+                                }
+                                else{
+                                    if(COUNT_VEZ == 1){
+                                        COUNT_VEZ = 2;
+                                    }
+                                    else{
+                                        COUNT_VEZ = 1;
+                                    }
+                                    passarVez();
+                                }
+                                break;
+                            case '4':
+                                mostrarRegras();
+                                break;
+                            case '5':
+                                salvarPartida("savegame.dat");
+                                break;
+                        }
+                    }
+                }while(op != '0' && finalizarJogo() == 0 && jogoTrancado() != 0);
+            } else {
+                printf("Nenhuma partida salva encontrada");
+                jogar();//volta ao menu
+            }
+            break;
+            
+        case '0': //sair
+            exit(0);
+            break;
+    }
 
 }
 
@@ -144,12 +211,6 @@ void prepararJogo(){
 	
 	printf("+----------------------------+\n");
 	passarVez();
-	
-	//if(sitjogo.jogadorJogo == '1')
-	//	sitjogo.jogadorJogo = '2';
-	//else{
-	//	sitjogo.jogadorJogo = '1';
-	//}
 }
 
 void jogadaJogador(){
@@ -225,21 +286,58 @@ void jogadaJogador(){
 
 
 void jogadaComputador(){
-	int pecajogavel = 0;
-	
-	for(int i = 0; i<27;i++){
-		if(pecas[i].lado1 == sitjogo.mesaDJogo || pecas[i].lado1 == sitjogo.mesaEJogo || pecas[i].lado2 == sitjogo.mesaDJogo || pecas[i].lado2 == sitjogo.mesaEJogo){
-			pecajogavel = 1;
-		}
-		
-	}
-	if(pecajogavel = 0){
-		if (pecas[27].status != 'N'){
-			passarVez();
-		}
-	}
-	
+	int livreDireita = proximaJogada();
+    int primeiraJogada = -1;
+    
+    printf("Vez de %s\n", nome2);
+    apresentarMesa();
+    
+    //Procura a primeira peça que pode ser jogada 
+    for(int i = 0; i < 28; i++){
+        if(pecas[i].status == '2'){ // peças do computador 
+            //verifica se a peça pode ser jogada em alguma extremidade
+            if((pecas[i].lado1 == sitjogo.mesaEJogo || pecas[i].lado2 == sitjogo.mesaEJogo) || 
+               (pecas[i].lado1 == sitjogo.mesaDJogo || pecas[i].lado2 == sitjogo.mesaDJogo)){
+                
+                primeiraJogada = i;
+                break; //Para no primeiro resultado encontrado 
+            }
+        }
+    }
+    
+    if(primeiraJogada != -1) {
+        //comp encontrou uma peça para jogar
+        COUNT_VEZ = 0;
+        printf("Pequenezza IA jogou a peça [%d|%d]\n", pecas[primeiraJogada].lado1, pecas[primeiraJogada].lado2);
+        
+        jogadaSimples(primeiraJogada, livreDireita);
+        
+        sitjogo.qtmesaJogo++;
+        sitjogo.mesaDJogo = mesa[livreDireita].ladoD;
+        sitjogo.mesaEJogo = mesa[0].ladoE;
+        
+        passarVez();
+    }
+    else {
+        //não pode jogar então tenta comprar
+        if(jogadaPossivel() == 0 && pecas[27].status == 'N') {
+            printf("Pequenezza IA comprou uma peça\n");
+            comprarPecas();
+        }
+        else if(pecas[27].status != 'N') {
+            //não há mais peças para comprar passa a vez
+            printf("Pequenezza IA passou a vez\n");
+            if(COUNT_VEZ == 1){
+                COUNT_VEZ = 2;
+            }
+            else{
+                COUNT_VEZ = 1;
+            }
+            passarVez();
+        }
+    }
 }
+	
 
 
 // for loop vendo atï¿½ quando o array mesa ï¿½ diferente de 0

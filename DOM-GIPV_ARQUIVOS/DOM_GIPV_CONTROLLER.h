@@ -21,3 +21,5 @@ int jogoTrancado();
 int jogadaPossivel();
 //void jogadaComputador();
 int querCarregar();
+void jogadaComputador();
+void jogadaIA(int pecca, int livre, char preferencia);
