@@ -386,11 +386,13 @@ int finalizarJogo(){
 	}
 	if(count1 == 0){
 		printf("%s Venceu :() xd", nome1);
+		system("pause");
 		return 1;
 		
 	}
 	if(count2 == 0){
 		printf("%s Venceu :() xd", nome2);
+		system("pause");
 		return 2;
 	}
 	else{
@@ -546,10 +548,12 @@ int jogoTrancado(){ //Caso onde o jogo tranca
 		if (soma1 > soma2){ //mensagem de sa�da
 			printf("%s perdeu com %d total de pontos\n",nome1, soma1);
 			printf("%s ganhou com %d total de pontos\n",nome2, soma2);
+			system("pause");
 			return 0;
 		if(soma2 > soma1){
 			printf("%s ganhou com %d total de pontos\n",nome1, soma1);
 			printf("%s perdeu com %d total de pontos\n",nome2, soma2);
+			system("pause");
 			return 0;
 		}
 		else 
