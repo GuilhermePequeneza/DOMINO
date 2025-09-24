@@ -31,7 +31,7 @@ int quantosJogadores(){
        if(quantJog == 1){
        	printf("\nNome jogador 1: ");
        	gets(nome1);
-       	strcpy(nome2, "Pequenezza A.I");//easter egg
+       	strcpy(nome2, "Pequenezza AI");//easter egg
        	sitjogo.jogadorComp = 2;
 	   }
 	   else{

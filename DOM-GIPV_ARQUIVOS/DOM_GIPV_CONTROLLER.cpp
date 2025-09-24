@@ -10,7 +10,7 @@
 void jogar(){
 	char op;
 
-    finalizarJogo();
+    //finalizarJogo();
     op = menuGeral();
     limpaTela();
     switch(op)
@@ -143,6 +143,7 @@ void jogar(){
             exit(0);
             break;
     }
+    finalizarJogo();
 
 }
 
@@ -153,9 +154,6 @@ void primeiraJogada() {
         int atualEhDupla = (pecas[i].lado1 == pecas[i].lado2);
         int maiorEhDupla = (pecas[pecaMaior].lado1 == pecas[pecaMaior].lado2);
 
-        /*printf("Comparando peca %d (%d|%d) com atual maior %d (%d|%d)\n", 
-                i, pecas[i].lado1, pecas[i].lado2, 
-                pecaMaior, pecas[pecaMaior].lado1, pecas[pecaMaior].lado2);*/
 
         if(maiorEhDupla && atualEhDupla) {
             if(pecas[i].lado1 > pecas[pecaMaior].lado1) {
